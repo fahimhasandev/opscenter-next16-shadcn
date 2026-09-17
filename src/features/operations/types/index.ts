@@ -17,6 +17,27 @@ export type OperationTemplate = {
   // Determines which server OS values are valid for this template.
   supportedPlatforms: ("windows" | "linux")[];
   apiName?: string;
+  jsonSchema?: Record<string, unknown>;
+  raw?: ApiTemplate;
+};
+
+export type ApiTemplate = {
+  base_json?: string;
+  category?: string;
+  friendly_name?: string;
+  job_type?: string;
+  live_prod_snow_record_requirement?: string;
+  platform?: string;
+  custom_credentials?: string[];
+  requires_variance?: string | boolean;
+  server_requirements?: Record<string, unknown>;
+  tags?: string;
+  subcategory?: string;
+  support_information?: Record<string, unknown>;
+  urls?: Array<{ name?: string; url?: string }>;
+  template_name: string;
+  JSONSchema?: Record<string, unknown>;
+  source?: Record<string, unknown>;
 };
 
 export type Environment = {
@@ -42,12 +63,7 @@ export type FormOption = {
 export type FormField = {
   name: string;
   label: string;
-  type:
-    | "text"
-    | "textarea"
-    | "select"
-    | "boolean"
-    | "number";
+  type: "text" | "textarea" | "select" | "boolean" | "number";
   required?: boolean;
   defaultValue?: string | number | boolean;
   placeholder?: string;
@@ -84,7 +100,6 @@ export type InitialOperationsData = {
   categories: TemplateCategory[];
   templates: OperationTemplate[];
 };
-
 
 export type MnemonicOption = {
   id: string;

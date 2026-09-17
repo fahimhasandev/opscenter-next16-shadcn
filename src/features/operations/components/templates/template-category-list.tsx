@@ -1,5 +1,8 @@
 import { TemplateCategoryItem } from "./template-category-item";
-import type { OperationTemplate, TemplateCategory } from "@/features/operations/types";
+import type {
+  OperationTemplate,
+  TemplateCategory,
+} from "@/features/operations/types";
 import type { PlatformFilter, TemplateTab } from "./template-panel-types";
 
 type Props = {
@@ -47,7 +50,28 @@ export function TemplateCategoryList({
           const open = expandedId === category.id;
           const count = visibleCounts.get(category.id) ?? category.count;
 
-          return <TemplateCategoryItem key={category.id} category={category} open={open} count={count} templates={filteredTemplates} loading={isTemplatesLoading} emptyMessage={tab === "platforms" ? platformFilter.toUpperCase() : "your search"} selectedId={selectedTemplateId} onToggle={() => onExpandedChange(open ? undefined : category.id)} onSelect={onSelectTemplate} />;
+          const categoryTemplates = filteredTemplates.filter(
+            (template) => template.categoryId === category.id,
+          );
+
+          return (
+            <TemplateCategoryItem
+              key={category.id}
+              category={category}
+              open={open}
+              count={count}
+              templates={categoryTemplates}
+              loading={isTemplatesLoading}
+              emptyMessage={
+                tab === "platforms"
+                  ? platformFilter.toUpperCase()
+                  : "your search"
+              }
+              selectedId={selectedTemplateId}
+              onToggle={() => onExpandedChange(open ? undefined : category.id)}
+              onSelect={onSelectTemplate}
+            />
+          );
         })}
       </div>
     </div>

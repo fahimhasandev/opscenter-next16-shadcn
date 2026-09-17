@@ -12,11 +12,24 @@ type Props = {
 };
 
 export function TopNavbar({ template }: Props) {
-  const [dark, setDark] = useState(false);
+  const [dark, setDark] = useState<boolean | null>(null);
 
   useEffect(() => {
-    document.documentElement.classList.toggle("dark", dark);
+    setDark(document.documentElement.classList.contains("dark"));
+  }, []);
+
+  useEffect(() => {
+    if (dark === null) return;
+
+    const root = document.documentElement;
+    root.classList.toggle("dark", dark);
+    root.style.colorScheme = dark ? "dark" : "light";
+    localStorage.setItem("opscenter-theme", dark ? "dark" : "light");
   }, [dark]);
+
+  const toggleDark = () => {
+    setDark((value) => !(value ?? document.documentElement.classList.contains("dark")));
+  };
 
   return (
     <header className="sticky top-0 z-10 flex h-12 shrink-0 items-center justify-between border-b border-slate-200 bg-white px-4 dark:border-slate-800 dark:bg-slate-950">
@@ -47,7 +60,10 @@ export function TopNavbar({ template }: Props) {
         </div>
       </div>
 
-      <NavbarActions dark={dark} onToggleDark={() => setDark((value) => !value)} />
+      <NavbarActions
+        dark={dark ?? false}
+        onToggleDark={toggleDark}
+      />
     </header>
   );
 }

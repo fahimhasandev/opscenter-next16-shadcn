@@ -1,13 +1,15 @@
 import "client-only";
 
 import { apiClient } from "@/lib/api-client";
+import { normalizeTemplates } from "../lib/normalize-template";
 import type {
+  ApiTemplate,
   Environment,
   OperationTemplate,
   RunOperationPayload,
   RunOperationResponse,
   ServersResponse,
-  TemplateCategory
+  TemplateCategory,
 } from "@/features/operations/types";
 
 export const operationsApi = {
@@ -15,26 +17,28 @@ export const operationsApi = {
     apiClient<TemplateCategory[]>("/api/template-categories"),
 
   getAllTemplates: () =>
-    apiClient<OperationTemplate[]>("/api/templates"),
+    apiClient<ApiTemplate | ApiTemplate[]>("/api/templates").then(
+      normalizeTemplates,
+    ),
 
   getTemplates: (categoryId: string) =>
-    apiClient<OperationTemplate[]>(
-      `/api/templates?category=${encodeURIComponent(categoryId)}`
-    ),
+    apiClient<ApiTemplate | ApiTemplate[]>(
+      `/api/templates?category=${encodeURIComponent(categoryId)}`,
+    ).then(normalizeTemplates),
 
   getEnvironments: (templateId: string) =>
     apiClient<Environment[]>(
-      `/api/templates/${encodeURIComponent(templateId)}/environments`
+      `/api/templates/${encodeURIComponent(templateId)}/environments`,
     ),
 
   getServers: (templateId: string, environmentId: string, search = "") =>
     apiClient<ServersResponse>(
-      `/api/servers?templateId=${encodeURIComponent(templateId)}&environment=${encodeURIComponent(environmentId)}&search=${encodeURIComponent(search)}`
+      `/api/servers?templateId=${encodeURIComponent(templateId)}&environment=${encodeURIComponent(environmentId)}&search=${encodeURIComponent(search)}`,
     ),
 
   runOperation: (payload: RunOperationPayload) =>
     apiClient<RunOperationResponse>("/api/operations/run", {
       method: "POST",
-      body: JSON.stringify(payload)
-    })
+      body: JSON.stringify(payload),
+    }),
 };

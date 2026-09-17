@@ -1,7 +1,10 @@
 "use client";
 
 import { useTemplatePanel } from "@/features/operations/hooks/use-template-panel";
-import type { InitialOperationsData, OperationTemplate } from "@/features/operations/types";
+import type {
+  InitialOperationsData,
+  OperationTemplate,
+} from "@/features/operations/types";
 import { TemplateCategoryList } from "./template-category-list";
 import { PlatformFilterMenu } from "./platform-filter-menu";
 import { TemplateSearchControls } from "./template-search-controls";
@@ -12,7 +15,11 @@ type Props = {
   onSelectTemplate: (template: OperationTemplate) => void;
 };
 
-export function TemplatePanel({ initialData, selectedTemplateId, onSelectTemplate }: Props) {
+export function TemplatePanel({
+  initialData,
+  selectedTemplateId,
+  onSelectTemplate,
+}: Props) {
   const panel = useTemplatePanel(initialData);
 
   return (
@@ -29,10 +36,15 @@ export function TemplatePanel({ initialData, selectedTemplateId, onSelectTemplat
         onTabChange={panel.setActiveTab}
         onSearchChange={panel.setSearch}
       />
-      {panel.activeTab === "platforms" && <PlatformFilterMenu selected={panel.platformFilter} onChange={panel.selectPlatform} />}
+      {panel.activeTab === "platforms" && (
+        <PlatformFilterMenu
+          selected={panel.platformFilter}
+          onChange={panel.selectPlatform}
+        />
+      )}
 
       <TemplateCategoryList
-        categories={panel.categories.data ?? []}
+        categories={panel.categoryItems}
         expandedId={panel.expandedId}
         filteredTemplates={panel.filteredTemplates}
         isCategoriesLoading={panel.categories.isLoading}

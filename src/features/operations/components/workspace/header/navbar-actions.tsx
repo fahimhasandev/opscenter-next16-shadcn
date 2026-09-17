@@ -9,7 +9,7 @@ export function NavbarActions({ dark, onToggleDark }: Props) {
       <Separator wideOnly />
       <Action icon={History} label="History" />
       <Separator wideOnly />
-      <button type="button" onClick={onToggleDark} className="grid h-8 w-8 place-items-center rounded-md hover:bg-slate-100 dark:hover:bg-slate-900" aria-label="Toggle color mode">
+      <button type="button" onClick={onToggleDark} className="grid h-8 w-8 place-items-center rounded-md hover:bg-slate-100 dark:hover:bg-slate-900" aria-label={dark ? "Switch to light mode" : "Switch to dark mode"} title={dark ? "Light mode" : "Dark mode"}>
         {dark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
       </button>
       <Separator />

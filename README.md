@@ -279,3 +279,516 @@ src/
 ├── types/ TypeScript types
 └── mock/ Temporary mock data
 ```
+
+## New Bloomer
+
+```ts
+import { useState } from "react";
+import {
+  Button,
+  Control,
+  Field,
+  Input,
+  Menu,
+  MenuList,
+  MenuLink,
+  Tag,
+} from "bloomer";
+
+export default function VerticalNavbar() {
+  const [server, setServer] = useState("MNE");
+  const [chgInc, setChgInc] = useState("");
+  const [mne, setMne] = useState("");
+  const [mnemonics, setMnemonics] = useState(["ddf", "yyu"]);
+
+  const addMnemonic = () => {
+    const value = mne.trim();
+
+    if (!value || mnemonics.includes(value)) return;
+
+    setMnemonics((current) => [...current, value]);
+    setMne("");
+  };
+
+  const removeMnemonic = (value: string) => {
+    setMnemonics((current) =>
+      current.filter((item) => item !== value)
+    );
+  };
+
+  return (
+    <aside className="day2ops-sidebar">
+      {/* Logo */}
+      <div className="sidebar-logo">
+        <div className="logo-mark">2</div>
+
+        <div>
+          Day2<span>Ops</span>
+        </div>
+      </div>
+
+      {/* Main Navigation */}
+      <Menu className="sidebar-menu">
+        <MenuList>
+          <li>
+            <MenuLink className="nav-item active">
+              ⚙️
+              <span>Operations</span>
+            </MenuLink>
+          </li>
+
+          <li>
+            <MenuLink className="nav-item">
+              ↶
+              <span>Tracking</span>
+            </MenuLink>
+          </li>
+
+          <li>
+            <MenuLink className="nav-item">
+              📄
+              <span>Documentation</span>
+            </MenuLink>
+          </li>
+        </MenuList>
+      </Menu>
+
+      {/* Operational Context */}
+      <div className="context-card">
+        <div className="context-title">
+          <span>▤</span>
+          <span>Server & Incident</span>
+        </div>
+
+        {/* Live Server */}
+        <Field>
+          <label className="field-label">
+            Live Server
+          </label>
+
+          <Control>
+            <div className="select-wrapper">
+              <select
+                value={server}
+                onChange={(event) =>
+                  setServer(event.target.value)
+                }
+              >
+                <option value="MNE">MNE</option>
+                <option value="PROD-WEB-01">
+                  PROD-WEB-01
+                </option>
+                <option value="PROD-APP-02">
+                  PROD-APP-02
+                </option>
+              </select>
+            </div>
+          </Control>
+        </Field>
+
+        {/* CHG / INC */}
+        <Field>
+          <label className="field-label">
+            CHG / INC
+          </label>
+
+          <Control>
+            <Input
+              value={chgInc}
+              placeholder="Search CHG or INC..."
+              onChange={(event: any) =>
+                setChgInc(event.target.value)
+              }
+            />
+          </Control>
+        </Field>
+
+        {/* MNE */}
+        <Field>
+          <label className="field-label">
+            MNE
+          </label>
+
+          <div className="mne-search">
+            <Control>
+              <Input
+                value={mne}
+                placeholder="Enter MNE..."
+                onChange={(event: any) =>
+                  setMne(event.target.value)
+                }
+                onKeyDown={(event: any) => {
+                  if (event.key === "Enter") {
+                    event.preventDefault();
+                    addMnemonic();
+                  }
+                }}
+              />
+            </Control>
+
+            <Button
+              className="add-button"
+              onClick={addMnemonic}
+            >
+              Add
+            </Button>
+          </div>
+        </Field>
+
+        {/* Selected MNE */}
+        <div className="selected-section">
+          <div className="selected-header">
+            <span>Selected MNE</span>
+
+            {mnemonics.length > 0 && (
+              <button
+                className="clear-button"
+                onClick={() => setMnemonics([])}
+              >
+                Clear all
+              </button>
+            )}
+          </div>
+
+          <div className="tag-list">
+            {mnemonics.map((item) => (
+              <Tag
+                key={item}
+                className="mne-tag"
+              >
+                {item}
+
+                <button
+                  onClick={() =>
+                    removeMnemonic(item)
+                  }
+                >
+                  ×
+                </button>
+              </Tag>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Push bottom navigation down */}
+      <div className="sidebar-spacer" />
+
+      {/* Bottom */}
+      <div className="bottom-navigation">
+        <a className="bottom-item">
+          👥
+          <span>Admin</span>
+        </a>
+
+        <a className="bottom-item logout">
+          ⇥
+          <span>Logout</span>
+        </a>
+      </div>
+    </aside>
+  );
+}
+
+```
+
+```css
+.day2ops-sidebar {
+  width: 290px;
+  height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+
+  padding: 20px 16px;
+
+  background: linear-gradient(180deg, #102b4c 0%, #071b2d 100%);
+
+  color: white;
+
+  overflow-y: auto;
+}
+
+/* -----------------------
+   LOGO
+----------------------- */
+
+.sidebar-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  padding: 4px 10px 24px;
+
+  font-size: 26px;
+  font-weight: 700;
+}
+
+.sidebar-logo span {
+  color: #d9732a;
+}
+
+.logo-mark {
+  width: 42px;
+  height: 42px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 12px;
+
+  background: #d9732a;
+
+  font-size: 22px;
+  font-weight: 800;
+}
+
+/* -----------------------
+   NAVIGATION
+----------------------- */
+
+.sidebar-menu {
+  margin-bottom: 20px;
+}
+
+.nav-item {
+  display: flex !important;
+  align-items: center;
+  gap: 14px;
+
+  min-height: 48px;
+
+  margin-bottom: 5px;
+  padding: 0 14px !important;
+
+  border-radius: 9px;
+
+  color: #d8e2ed !important;
+
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.nav-item:hover {
+  background: rgba(255, 255, 255, 0.06) !important;
+  color: white !important;
+}
+
+.nav-item.active {
+  position: relative;
+
+  background: rgba(39, 113, 184, 0.25) !important;
+
+  color: white !important;
+}
+
+.nav-item.active::before {
+  content: "";
+
+  position: absolute;
+  left: 0;
+
+  width: 3px;
+  height: 26px;
+
+  border-radius: 0 3px 3px 0;
+
+  background: #d9732a;
+}
+
+/* -----------------------
+   SERVER / INCIDENT CARD
+----------------------- */
+
+.context-card {
+  padding: 16px;
+
+  border: 1px solid rgba(217, 115, 42, 0.35);
+  border-radius: 12px;
+
+  background: rgba(255, 255, 255, 0.045);
+}
+
+.context-title {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+
+  margin-bottom: 18px;
+
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.context-title > span:first-child {
+  color: #d9732a;
+}
+
+/* -----------------------
+   FIELDS
+----------------------- */
+
+.field-label {
+  display: block;
+
+  margin-bottom: 7px;
+
+  color: #c9d5e2;
+
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.context-card .field {
+  margin-bottom: 16px;
+}
+
+.context-card input,
+.select-wrapper select {
+  width: 100%;
+  height: 39px;
+
+  padding: 0 11px;
+
+  border: 1px solid #405a72;
+  border-radius: 7px;
+
+  background: #182f43;
+
+  color: white;
+
+  box-shadow: none;
+}
+
+.context-card input::placeholder {
+  color: #7f93a7;
+}
+
+/* -----------------------
+   SERVER SELECT
+----------------------- */
+
+.select-wrapper select {
+  cursor: pointer;
+}
+
+/* -----------------------
+   MNE INPUT
+----------------------- */
+
+.mne-search {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 7px;
+}
+
+.add-button {
+  height: 39px !important;
+
+  border: none !important;
+
+  background: #d9732a !important;
+  color: white !important;
+}
+
+/* -----------------------
+   TAGS
+----------------------- */
+
+.selected-section {
+  margin-top: 5px;
+}
+
+.selected-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 10px;
+
+  color: #c9d5e2;
+
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.clear-button {
+  border: 0;
+  background: transparent;
+
+  color: #e58a49;
+
+  font-size: 11px;
+
+  cursor: pointer;
+}
+
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.mne-tag {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 7px;
+
+  padding: 5px 9px !important;
+
+  border: 1px solid rgba(217, 115, 42, 0.5);
+
+  background: rgba(217, 115, 42, 0.18) !important;
+  color: #ffd5b6 !important;
+}
+
+.mne-tag button {
+  padding: 0;
+
+  border: 0;
+  background: transparent;
+
+  color: white;
+
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* -----------------------
+   BOTTOM
+----------------------- */
+
+.sidebar-spacer {
+  flex: 1;
+  min-height: 25px;
+}
+
+.bottom-navigation {
+  padding-top: 12px;
+
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.bottom-item {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+
+  padding: 13px 12px;
+
+  border-radius: 8px;
+
+  color: #d8e2ed;
+
+  cursor: pointer;
+}
+
+.bottom-item:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: white;
+}
+
+.bottom-item.logout {
+  margin-top: 3px;
+}
+```
