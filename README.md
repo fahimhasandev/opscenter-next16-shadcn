@@ -799,31 +799,88 @@ export default function VerticalNavbar() {
 import { useState } from "react";
 import "./Day2OpsSidebar.css";
 
-const SERVER_MNES: Record<string, string[]> = {
-  MNE: ["ddf", "yyu"],
-  "PROD-WEB-01": ["web", "apache"],
-  "PROD-APP-02": ["app", "java"],
+type UserRole = "USER" | "ADMIN";
+
+type Server = {
+  id: string;
+  name: string;
+  defaultMnes: string[];
 };
 
-export default function Day2OpsSidebar() {
-  const [activeNav, setActiveNav] = useState("Operations");
-  const [panelOpen, setPanelOpen] = useState(true);
+const LIVE_SERVERS: Server[] = [
+  {
+    id: "server-1",
+    name: "MNE-01",
+    defaultMnes: ["ddf"],
+  },
+  {
+    id: "server-2",
+    name: "WEB-01",
+    defaultMnes: ["web"],
+  },
+  {
+    id: "server-3",
+    name: "APP-02",
+    defaultMnes: ["app"],
+  },
+  {
+    id: "server-4",
+    name: "API-01",
+    defaultMnes: ["api"],
+  },
+  {
+    id: "server-5",
+    name: "DB-01",
+    defaultMnes: ["db"],
+  },
+];
 
-  const [server, setServer] = useState("MNE");
+export default function Day2OpsSidebar() {
+  // Change to "USER" to see normal-user behavior.
+  const userRole: UserRole = "ADMIN";
+
+  const isAdmin = userRole === "ADMIN";
+
+  const [collapsed, setCollapsed] = useState(false);
+
+  const [activeNav, setActiveNav] = useState("Operations");
+
+  const [selectedServerId, setSelectedServerId] = useState(LIVE_SERVERS[0].id);
+
   const [chgInc, setChgInc] = useState("");
 
+  const [mnes, setMnes] = useState<string[]>(LIVE_SERVERS[0].defaultMnes);
+
   const [mneInput, setMneInput] = useState("");
-  const [mnes, setMnes] = useState<string[]>(SERVER_MNES.MNE);
 
-  function handleServerChange(value: string) {
-    setServer(value);
+  /* =============================================
+     SERVER
+  ============================================= */
 
-    // Demo:
-    // This represents MNEs returned by the API for this server.
-    setMnes(SERVER_MNES[value] ?? []);
+  function handleServerSelect(server: Server) {
+    setSelectedServerId(server.id);
+
+    /*
+     * Replace this later with your real API:
+     *
+     * const response = await fetch(
+     *   `/api/servers/${server.id}/mnes`
+     * );
+     *
+     * const data = await response.json();
+     * setMnes(data.mnes);
+     */
+
+    setMnes(server.defaultMnes);
   }
 
+  /* =============================================
+     ADD MNE - ADMIN ONLY
+  ============================================= */
+
   function addMne() {
+    if (!isAdmin) return;
+
     const value = mneInput.trim();
 
     if (!value) return;
@@ -835,27 +892,60 @@ export default function Day2OpsSidebar() {
     setMneInput("");
   }
 
-  function removeMne(value: string) {
-    setMnes((current) => current.filter((mne) => mne !== value));
+  /* =============================================
+     REMOVE MNE - ADMIN ONLY
+  ============================================= */
+
+  function removeMne(mne: string) {
+    if (!isAdmin) return;
+
+    setMnes((current) => current.filter((currentMne) => currentMne !== mne));
   }
 
   return (
-    <aside className="day2ops-sidebar">
-      {/* BRAND */}
-      <div className="sidebar-brand">
-        <div className="brand-icon">2</div>
+    <aside
+      className={`
+        day2ops-sidebar
+        ${collapsed ? "sidebar-collapsed" : ""}
+      `}
+    >
+      {/* =====================================
+          HEADER
+      ====================================== */}
 
-        <div className="brand-name">
-          Day2<span>Ops</span>
-        </div>
-      </div>
+      <header className="sidebar-header">
+        {!collapsed && (
+          <div className="sidebar-brand">
+            <div className="brand-logo">2</div>
 
-      {/* MAIN NAV */}
-      <nav className="main-nav">
+            <div className="brand-name">
+              Day2<span>Ops</span>
+            </div>
+          </div>
+        )}
+
+        <button
+          type="button"
+          className="collapse-button"
+          onClick={() => setCollapsed((current) => !current)}
+          aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+          title={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+        >
+          {collapsed ? "›" : "‹"}
+        </button>
+      </header>
+
+      {/* =====================================
+          BOX 1
+          MAIN NAVIGATION
+      ====================================== */}
+
+      <div className="sidebar-box navigation-box">
         <NavItem
           icon="⚙"
           label="Operations"
           active={activeNav === "Operations"}
+          collapsed={collapsed}
           onClick={() => setActiveNav("Operations")}
         />
 
@@ -863,6 +953,7 @@ export default function Day2OpsSidebar() {
           icon="↶"
           label="Tracking"
           active={activeNav === "Tracking"}
+          collapsed={collapsed}
           onClick={() => setActiveNav("Tracking")}
         />
 
@@ -870,132 +961,267 @@ export default function Day2OpsSidebar() {
           icon="▤"
           label="Documentation"
           active={activeNav === "Documentation"}
+          collapsed={collapsed}
           onClick={() => setActiveNav("Documentation")}
         />
-      </nav>
+      </div>
 
-      <div className="sidebar-divider" />
+      {/* =====================================
+          BOX 2
+          SERVER + CHG/INC
+      ====================================== */}
 
-      {/* SERVER / INCIDENT */}
-      <section className={`operations-context ${panelOpen ? "" : "collapsed"}`}>
-        <button
-          className="context-header"
-          onClick={() => setPanelOpen((current) => !current)}
-        >
-          <span className="context-icon">▦</span>
+      <div className="sidebar-box">
+        {collapsed ? (
+          <div className="collapsed-controls">
+            <CollapsedButton
+              icon="▣"
+              label="Live Servers"
+              onClick={() => setCollapsed(false)}
+            />
 
-          <span>Server & Incident</span>
+            <CollapsedButton
+              icon="⌕"
+              label="CHG / INC"
+              onClick={() => setCollapsed(false)}
+            />
+          </div>
+        ) : (
+          <>
+            <div className="box-heading">
+              <span className="box-heading-icon">▣</span>
 
-          <span className="context-chevron">{panelOpen ? "⌃" : "⌄"}</span>
-        </button>
+              <span>Server / Change</span>
+            </div>
 
-        {panelOpen && (
-          <div className="context-content">
-            {/* SERVER */}
-            <div className="form-group">
-              <label>Live Server</label>
+            {/* LIVE SERVERS */}
 
-              <div className="select-container">
-                <select
-                  value={server}
-                  onChange={(event) => handleServerChange(event.target.value)}
-                >
-                  <option value="MNE">MNE</option>
+            <div className="field-group">
+              <label>Live Servers</label>
 
-                  <option value="PROD-WEB-01">PROD-WEB-01</option>
+              <div className="server-list">
+                {LIVE_SERVERS.map((server) => {
+                  const selected = selectedServerId === server.id;
 
-                  <option value="PROD-APP-02">PROD-APP-02</option>
-                </select>
+                  return (
+                    <button
+                      key={server.id}
+                      type="button"
+                      className={`
+                          server-button
+                          ${selected ? "selected" : ""}
+                        `}
+                      onClick={() => handleServerSelect(server)}
+                      title={server.name}
+                    >
+                      <span className="server-status" />
+
+                      <span className="server-name">{server.name}</span>
+                    </button>
+                  );
+                })}
               </div>
             </div>
 
             {/* CHG / INC */}
-            <div className="form-group">
+
+            <div className="field-group">
               <label>CHG / INC</label>
 
-              <input
-                value={chgInc}
-                onChange={(event) => setChgInc(event.target.value)}
-                placeholder="Search CHG or INC..."
-              />
+              <div className="search-input">
+                <span className="search-icon">⌕</span>
+
+                <input
+                  type="text"
+                  value={chgInc}
+                  onChange={(event) => setChgInc(event.target.value)}
+                  placeholder="Search CHG / INC"
+                />
+              </div>
+            </div>
+          </>
+        )}
+      </div>
+
+      {/* =====================================
+          BOX 3
+          MNE
+      ====================================== */}
+
+      <div className="sidebar-box">
+        {collapsed ? (
+          <CollapsedButton
+            icon="M"
+            label="Mnemonics"
+            onClick={() => setCollapsed(false)}
+          />
+        ) : (
+          <>
+            <div className="box-heading">
+              <span className="box-heading-icon">M</span>
+
+              <span>Mnemonics</span>
+
+              {isAdmin && <span className="admin-badge">Admin</span>}
             </div>
 
-            {/* MNE */}
-            <div className="form-group">
-              <label>MNE</label>
+            {/* CURRENT MNE */}
 
-              <input
-                value={mneInput}
-                onChange={(event) => setMneInput(event.target.value)}
-                onKeyDown={(event) => {
-                  if (event.key === "Enter") {
-                    event.preventDefault();
-                    addMne();
-                  }
-                }}
-                placeholder="Search or add MNE..."
-              />
+            <div className="field-group">
+              <label>Selected MNE</label>
 
-              <div className="input-help">Press Enter to add an MNE</div>
+              {mnes.length > 0 ? (
+                <div className="mne-tags">
+                  {mnes.map((mne) => (
+                    <span className="mne-tag" key={mne}>
+                      <span>{mne}</span>
+
+                      {/* ADMIN ONLY */}
+
+                      {isAdmin && (
+                        <button
+                          type="button"
+                          onClick={() => removeMne(mne)}
+                          aria-label={`Remove ${mne}`}
+                        >
+                          ×
+                        </button>
+                      )}
+                    </span>
+                  ))}
+                </div>
+              ) : (
+                <div className="empty-mne">No MNE assigned</div>
+              )}
             </div>
 
-            {/* TAGS */}
-            {mnes.length > 0 && (
-              <div className="mne-tags">
-                {mnes.map((mne) => (
-                  <div className="mne-tag" key={mne}>
-                    <span>{mne}</span>
+            {/* ADMIN ONLY ADD MNE */}
 
-                    <button
-                      type="button"
-                      aria-label={`Remove ${mne}`}
-                      onClick={() => removeMne(mne)}
-                    >
-                      ×
-                    </button>
-                  </div>
-                ))}
+            {isAdmin && (
+              <div className="field-group admin-mne">
+                <label>Add MNE</label>
+
+                <div className="mne-input-row">
+                  <input
+                    type="text"
+                    value={mneInput}
+                    onChange={(event) => setMneInput(event.target.value)}
+                    onKeyDown={(event) => {
+                      if (event.key === "Enter") {
+                        event.preventDefault();
+
+                        addMne();
+                      }
+                    }}
+                    placeholder="Enter MNE"
+                  />
+
+                  <button
+                    type="button"
+                    className="add-mne-button"
+                    onClick={addMne}
+                    disabled={!mneInput.trim()}
+                  >
+                    +
+                  </button>
+                </div>
               </div>
             )}
-          </div>
+          </>
         )}
-      </section>
+      </div>
 
-      {/* PUSH BOTTOM NAVIGATION DOWN */}
+      {/* PUSH FOOTER DOWN */}
+
       <div className="sidebar-spacer" />
 
-      {/* BOTTOM */}
-      <div className="bottom-navigation">
-        <button className="bottom-nav-item">
-          <span className="bottom-icon">♟</span>
-          <span>Admin</span>
-        </button>
+      {/* =====================================
+          FOOTER
+      ====================================== */}
 
-        <button className="bottom-nav-item logout">
-          <span className="bottom-icon">⇥</span>
-          <span>Logout</span>
-        </button>
-      </div>
+      <footer className="sidebar-footer">
+        {isAdmin && (
+          <NavItem
+            icon="♟"
+            label="Admin"
+            collapsed={collapsed}
+            onClick={() => {}}
+          />
+        )}
+
+        <NavItem
+          icon="⇥"
+          label="Logout"
+          collapsed={collapsed}
+          danger
+          onClick={() => {}}
+        />
+      </footer>
     </aside>
   );
 }
 
+/* ==================================================
+   NAV ITEM
+================================================== */
+
 type NavItemProps = {
   icon: string;
   label: string;
+  collapsed: boolean;
+
   active?: boolean;
+  danger?: boolean;
+
   onClick: () => void;
 };
 
-function NavItem({ icon, label, active = false, onClick }: NavItemProps) {
+function NavItem({
+  icon,
+  label,
+  collapsed,
+  active = false,
+  danger = false,
+  onClick,
+}: NavItemProps) {
   return (
     <button
       type="button"
-      className={`nav-item ${active ? "active" : ""}`}
+      className={[
+        "nav-item",
+        active ? "active" : "",
+        danger ? "danger" : "",
+      ].join(" ")}
+      title={collapsed ? label : undefined}
       onClick={onClick}
     >
       <span className="nav-icon">{icon}</span>
-      <span>{label}</span>
+
+      {!collapsed && <span className="nav-label">{label}</span>}
+    </button>
+  );
+}
+
+/* ==================================================
+   COLLAPSED BUTTON
+================================================== */
+
+type CollapsedButtonProps = {
+  icon: string;
+  label: string;
+  onClick: () => void;
+};
+
+function CollapsedButton({ icon, label, onClick }: CollapsedButtonProps) {
+  return (
+    <button
+      type="button"
+      className="collapsed-button"
+      title={label}
+      aria-label={label}
+      onClick={onClick}
+    >
+      {icon}
     </button>
   );
 }
@@ -1004,98 +1230,230 @@ function NavItem({ icon, label, active = false, onClick }: NavItemProps) {
 Day2OpsSidebar.css
 
 ```css
-.day2ops-sidebar {
-  width: 310px;
-  height: 100vh;
-
+* {
   box-sizing: border-box;
+}
+
+/* ==========================================
+   SIDEBAR
+========================================== */
+
+.day2ops-sidebar {
+  width: 248px;
+  height: 100vh;
 
   display: flex;
   flex-direction: column;
 
-  padding: 20px 16px 16px;
+  padding: 12px 10px;
 
-  background: linear-gradient(180deg, #0c2d4d 0%, #071a2b 100%);
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  background: linear-gradient(180deg, #102d4b 0%, #071a2b 100%);
 
   color: #ffffff;
 
-  box-shadow: 8px 0 30px rgba(10, 30, 50, 0.14);
-
-  overflow-y: auto;
+  transition:
+    width 220ms ease,
+    padding 220ms ease;
 }
 
-/* ========================================
-   BRAND
-======================================== */
+.day2ops-sidebar.sidebar-collapsed {
+  width: 68px;
 
-.sidebar-brand {
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+/* ==========================================
+   HEADER
+========================================== */
+
+.sidebar-header {
+  min-height: 44px;
+
   display: flex;
   align-items: center;
-  gap: 12px;
 
-  padding: 4px 10px 22px;
+  margin-bottom: 10px;
 }
 
-.brand-icon {
-  width: 44px;
-  height: 44px;
+.sidebar-brand {
+  min-width: 0;
+
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+}
+
+.brand-logo {
+  width: 34px;
+  height: 34px;
 
   flex-shrink: 0;
 
   display: grid;
   place-items: center;
 
-  border-radius: 13px;
+  border-radius: 8px;
 
   background: #d9732a;
 
-  font-size: 22px;
-  font-weight: 900;
+  font-size: 17px;
+  font-weight: 800;
 }
 
 .brand-name {
-  font-size: 25px;
-  font-weight: 750;
+  white-space: nowrap;
+
+  font-size: 18px;
+  font-weight: 700;
 }
 
 .brand-name span {
   color: #d9732a;
 }
 
-/* ========================================
-   MAIN NAVIGATION
-======================================== */
+/* ==========================================
+   COLLAPSE
+========================================== */
 
-.main-nav {
-  display: flex;
-  flex-direction: column;
+.collapse-button {
+  width: 28px;
+  height: 28px;
 
-  gap: 5px;
+  flex-shrink: 0;
+
+  display: grid;
+  place-items: center;
+
+  margin-left: auto;
+
+  padding: 0;
+
+  border: 1px solid rgba(255, 255, 255, 0.13);
+
+  border-radius: 6px;
+
+  background: rgba(255, 255, 255, 0.06);
+
+  color: #dbe6ef;
+
+  font-size: 20px;
+
+  cursor: pointer;
 }
 
-.nav-item {
-  position: relative;
+.collapse-button:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
 
+.sidebar-collapsed .collapse-button {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ==========================================
+   BOXES
+========================================== */
+
+.sidebar-box {
   width: 100%;
-  min-height: 48px;
+
+  padding: 8px;
+
+  margin-bottom: 8px;
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  border-radius: 9px;
+
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.sidebar-collapsed .sidebar-box {
+  padding: 4px;
+}
+
+/* ==========================================
+   BOX HEADING
+========================================== */
+
+.box-heading {
+  min-width: 0;
 
   display: flex;
   align-items: center;
 
-  gap: 13px;
+  gap: 6px;
 
-  padding: 0 14px;
+  margin-bottom: 9px;
+
+  color: #edf3f8;
+
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.box-heading-icon {
+  color: #d9732a;
+
+  font-weight: 800;
+}
+
+.admin-badge {
+  margin-left: auto;
+
+  padding: 2px 5px;
+
+  border-radius: 4px;
+
+  background: rgba(217, 115, 42, 0.16);
+
+  color: #e99960;
+
+  font-size: 8px;
+  font-weight: 700;
+
+  text-transform: uppercase;
+}
+
+/* ==========================================
+   NAVIGATION
+========================================== */
+
+.navigation-box {
+  display: flex;
+  flex-direction: column;
+
+  gap: 2px;
+}
+
+.nav-item {
+  width: 100%;
+  height: 37px;
+
+  min-width: 0;
+
+  display: flex;
+  align-items: center;
+
+  gap: 9px;
+
+  padding: 0 9px;
 
   border: 0;
-  border-radius: 10px;
+  border-radius: 6px;
 
   background: transparent;
 
-  color: #dce7f1;
+  color: #cbd8e3;
 
   font-family: inherit;
-  font-size: 15px;
-  font-weight: 600;
+  font-size: 12px;
+  font-weight: 500;
 
   text-align: left;
 
@@ -1107,12 +1465,22 @@ Day2OpsSidebar.css
 }
 
 .nav-icon {
-  width: 24px;
+  width: 19px;
 
-  flex-shrink: 0;
+  flex: 0 0 19px;
 
-  font-size: 19px;
   text-align: center;
+
+  font-size: 15px;
+}
+
+.nav-label {
+  min-width: 0;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .nav-item:hover {
@@ -1122,215 +1490,251 @@ Day2OpsSidebar.css
 }
 
 .nav-item.active {
-  background: rgba(43, 111, 175, 0.27);
+  background: rgba(43, 111, 175, 0.28);
 
   color: #ffffff;
 
   box-shadow: inset 3px 0 #d9732a;
 }
 
-/* ========================================
-   DIVIDER
-======================================== */
+.sidebar-collapsed .nav-item {
+  justify-content: center;
 
-.sidebar-divider {
-  height: 1px;
-
-  margin: 18px 10px;
-
-  background: rgba(255, 255, 255, 0.12);
+  padding: 0;
 }
 
-/* ========================================
-   SERVER / INCIDENT
-======================================== */
+.sidebar-collapsed .nav-icon {
+  width: auto;
 
-.operations-context {
-  overflow: hidden;
-
-  border: 1px solid rgba(217, 115, 42, 0.38);
-  border-radius: 14px;
-
-  background: rgba(255, 255, 255, 0.045);
+  flex-basis: auto;
 }
 
-.context-header {
-  width: 100%;
+/* ==========================================
+   FORM LABEL
+========================================== */
 
-  display: flex;
-  align-items: center;
-
-  gap: 10px;
-
-  padding: 15px;
-
-  border: 0;
-
-  background: transparent;
-
-  color: #ffffff;
-
-  font-family: inherit;
-  font-size: 15px;
-  font-weight: 700;
-
-  cursor: pointer;
+.field-group + .field-group {
+  margin-top: 10px;
 }
 
-.context-icon {
-  width: 24px;
-
-  color: #d9732a;
-
-  font-size: 20px;
-}
-
-.context-chevron {
-  margin-left: auto;
-
-  color: #b9c8d5;
-}
-
-.context-content {
-  padding: 0 15px 16px;
-}
-
-/* ========================================
-   FORM
-======================================== */
-
-.form-group {
-  margin-top: 13px;
-}
-
-.form-group:first-child {
-  margin-top: 4px;
-}
-
-.form-group label {
+.field-group label {
   display: block;
 
-  margin-bottom: 6px;
+  margin-bottom: 5px;
 
-  color: #bdcad7;
+  color: #9fb1c0;
 
-  font-size: 12px;
+  font-size: 9px;
   font-weight: 700;
+
+  letter-spacing: 0.05em;
+
+  text-transform: uppercase;
 }
 
-.form-group input,
-.form-group select {
+/* ==========================================
+   LIVE SERVER BUTTONS
+========================================== */
+
+.server-list {
   width: 100%;
-  height: 41px;
 
-  box-sizing: border-box;
+  max-height: 88px;
 
-  padding: 0 11px;
+  display: flex;
+  flex-wrap: wrap;
 
-  border: 1px solid #405c74;
-  border-radius: 8px;
+  gap: 5px;
+
+  overflow-y: auto;
+
+  padding-right: 2px;
+}
+
+.server-button {
+  min-width: 0;
+  max-width: 100%;
+
+  display: inline-flex;
+  align-items: center;
+
+  gap: 5px;
+
+  padding: 6px 7px;
+
+  border: 1px solid #3d576c;
+  border-radius: 6px;
+
+  background: #173147;
+
+  color: #c7d5df;
+
+  font-family: inherit;
+  font-size: 9px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background 150ms ease,
+    border-color 150ms ease,
+    color 150ms ease;
+}
+
+.server-button:hover {
+  border-color: #60788c;
+
+  background: #1b3951;
+
+  color: #ffffff;
+}
+
+.server-button.selected {
+  border-color: #d9732a;
+
+  background: rgba(217, 115, 42, 0.16);
+
+  color: #ffffff;
+}
+
+.server-status {
+  width: 5px;
+  height: 5px;
+
+  flex: 0 0 5px;
+
+  border-radius: 50%;
+
+  background: #51c58c;
+
+  box-shadow: 0 0 0 2px rgba(81, 197, 140, 0.1);
+}
+
+.server-name {
+  min-width: 0;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ==========================================
+   SCROLLBAR
+========================================== */
+
+.server-list::-webkit-scrollbar {
+  width: 3px;
+}
+
+.server-list::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* ==========================================
+   SEARCH INPUT
+========================================== */
+
+.search-input {
+  position: relative;
+}
+
+.search-icon {
+  position: absolute;
+
+  top: 50%;
+  left: 8px;
+
+  transform: translateY(-50%);
+
+  color: #788fa2;
+
+  font-size: 13px;
+
+  pointer-events: none;
+}
+
+.search-input input {
+  padding-left: 27px;
+}
+
+/* ==========================================
+   INPUTS
+========================================== */
+
+.field-group input {
+  width: 100%;
+  height: 32px;
+
+  min-width: 0;
+
+  padding: 0 8px;
+
+  border: 1px solid #405a70;
+  border-radius: 6px;
 
   outline: none;
 
-  background: #173148;
+  background: #173147;
 
   color: #ffffff;
 
   font-family: inherit;
-  font-size: 13px;
+  font-size: 10px;
 
   transition:
     border-color 150ms ease,
     box-shadow 150ms ease;
 }
 
-.form-group input::placeholder {
-  color: #7890a4;
+.field-group input::placeholder {
+  color: #72899c;
 }
 
-.form-group input:focus,
-.form-group select:focus {
+.field-group input:focus {
   border-color: #d9732a;
 
-  box-shadow: 0 0 0 2px rgba(217, 115, 42, 0.12);
+  box-shadow: 0 0 0 2px rgba(217, 115, 42, 0.1);
 }
 
-/* ========================================
-   SELECT
-======================================== */
-
-.select-container {
-  position: relative;
-}
-
-.select-container select {
-  appearance: none;
-
-  padding-right: 35px;
-
-  cursor: pointer;
-}
-
-.select-container::after {
-  content: "⌄";
-
-  position: absolute;
-
-  top: 9px;
-  right: 12px;
-
-  color: #ccd8e3;
-
-  pointer-events: none;
-}
-
-/* ========================================
-   MNE
-======================================== */
-
-.input-help {
-  margin-top: 6px;
-
-  color: #7890a4;
-
-  font-size: 11px;
-}
-
-/* ========================================
-   TAGS
-======================================== */
+/* ==========================================
+   MNE TAGS
+========================================== */
 
 .mne-tags {
+  width: 100%;
+
   display: flex;
   flex-wrap: wrap;
 
-  gap: 7px;
-
-  margin-top: 12px;
+  gap: 5px;
 }
 
 .mne-tag {
-  display: flex;
+  min-width: 0;
+
+  display: inline-flex;
   align-items: center;
 
-  gap: 7px;
+  gap: 5px;
 
-  padding: 6px 9px;
+  padding: 4px 7px;
 
-  border: 1px solid rgba(217, 115, 42, 0.65);
-  border-radius: 7px;
+  border: 1px solid rgba(217, 115, 42, 0.55);
 
-  background: rgba(217, 115, 42, 0.2);
+  border-radius: 5px;
 
-  color: #ffd8bd;
+  background: rgba(217, 115, 42, 0.15);
 
-  font-size: 12px;
+  color: #ffd1ae;
+
+  font-size: 9px;
+  font-weight: 600;
 }
 
 .mne-tag button {
-  display: grid;
-  place-items: center;
-
   padding: 0;
 
   border: 0;
@@ -1339,88 +1743,221 @@ Day2OpsSidebar.css
 
   color: #ffffff;
 
-  font-size: 16px;
+  font-size: 12px;
   line-height: 1;
 
   cursor: pointer;
 }
 
 .mne-tag button:hover {
-  color: #ff9c56;
+  color: #ff9650;
 }
 
-/* ========================================
-   SPACER
-======================================== */
+.empty-mne {
+  padding: 7px;
 
-.sidebar-spacer {
-  flex: 1;
+  border: 1px dashed #3c566b;
+  border-radius: 5px;
 
-  min-height: 30px;
-}
+  color: #72899c;
 
-/* ========================================
-   ADMIN / LOGOUT
-======================================== */
-
-.bottom-navigation {
-  padding-top: 12px;
-
-  border-top: 1px solid rgba(255, 255, 255, 0.12);
-}
-
-.bottom-nav-item {
-  width: 100%;
-  min-height: 48px;
-
-  display: flex;
-  align-items: center;
-
-  gap: 13px;
-
-  padding: 0 14px;
-
-  border: 0;
-  border-radius: 9px;
-
-  background: transparent;
-
-  color: #dce7f1;
-
-  font-family: inherit;
-  font-size: 15px;
-  font-weight: 600;
-
-  cursor: pointer;
-}
-
-.bottom-icon {
-  width: 24px;
-
-  font-size: 20px;
+  font-size: 9px;
 
   text-align: center;
 }
 
-.bottom-nav-item:hover {
-  background: rgba(255, 255, 255, 0.07);
+/* ==========================================
+   ADMIN ADD MNE
+========================================== */
 
-  color: #ffffff;
+.admin-mne {
+  padding-top: 8px;
+
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
 }
 
-.bottom-nav-item.logout:hover {
-  background: rgba(217, 115, 42, 0.14);
+.mne-input-row {
+  min-width: 0;
 
-  color: #ff9d58;
+  display: grid;
+
+  grid-template-columns: minmax(0, 1fr) 30px;
+
+  gap: 5px;
 }
 
-/* ========================================
-   RESPONSIVE
-======================================== */
+.add-mne-button {
+  width: 30px;
+  height: 32px;
 
-@media (max-width: 768px) {
+  padding: 0;
+
+  border: 0;
+  border-radius: 6px;
+
+  background: #d9732a;
+
+  color: white;
+
+  font-size: 17px;
+  font-weight: 500;
+
+  cursor: pointer;
+}
+
+.add-mne-button:hover {
+  background: #e47d32;
+}
+
+.add-mne-button:disabled {
+  opacity: 0.4;
+
+  cursor: not-allowed;
+}
+
+/* ==========================================
+   COLLAPSED CONTROLS
+========================================== */
+
+.collapsed-controls {
+  display: flex;
+  flex-direction: column;
+
+  gap: 2px;
+}
+
+.collapsed-button {
+  width: 100%;
+  height: 35px;
+
+  display: grid;
+  place-items: center;
+
+  padding: 0;
+
+  border: 0;
+  border-radius: 6px;
+
+  background: transparent;
+
+  color: #ccd9e3;
+
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.collapsed-button:hover {
+  background: rgba(255, 255, 255, 0.08);
+
+  color: #d9732a;
+}
+
+/* ==========================================
+   FOOTER
+========================================== */
+
+.sidebar-spacer {
+  flex: 1;
+
+  min-height: 10px;
+}
+
+.sidebar-footer {
+  padding-top: 7px;
+
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.nav-item.danger:hover {
+  background: rgba(217, 115, 42, 0.12);
+
+  color: #ff9b55;
+}
+
+/* ==========================================
+   SHORT HEIGHT SCREENS
+========================================== */
+
+@media (max-height: 650px) {
   .day2ops-sidebar {
-    width: 280px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+
+  .sidebar-header {
+    min-height: 38px;
+
+    margin-bottom: 6px;
+  }
+
+  .sidebar-box {
+    margin-bottom: 6px;
+
+    padding: 6px;
+  }
+
+  .nav-item {
+    height: 32px;
+  }
+
+  .server-list {
+    max-height: 62px;
+  }
+
+  .field-group + .field-group {
+    margin-top: 7px;
+  }
+
+  .field-group input {
+    height: 29px;
+  }
+
+  .mne-input-row {
+    grid-template-columns: minmax(0, 1fr) 28px;
+  }
+
+  .add-mne-button {
+    width: 28px;
+    height: 29px;
+  }
+}
+
+/* ==========================================
+   SMALL WIDTH
+========================================== */
+
+@media (max-width: 600px) {
+  .day2ops-sidebar {
+    width: 220px;
+
+    max-width: 85vw;
+
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
+  .day2ops-sidebar.sidebar-collapsed {
+    width: 60px;
+
+    padding-left: 6px;
+    padding-right: 6px;
+  }
+
+  .sidebar-box {
+    padding: 7px;
+  }
+
+  .server-list {
+    max-height: 75px;
+  }
+
+  .server-button {
+    padding: 5px 6px;
+
+    font-size: 8px;
   }
 }
 ```
