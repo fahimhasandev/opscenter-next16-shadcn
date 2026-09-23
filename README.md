@@ -1961,3 +1961,5 @@ Day2OpsSidebar.css
   }
 }
 ```
+
+![alt text](<CleanShot 2026-09-23 at 12.48.06 PM@2x.png>)
