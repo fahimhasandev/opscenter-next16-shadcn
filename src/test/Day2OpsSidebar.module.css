@@ -1,49 +1,56 @@
+/* ========================================
+   SIDEBAR
+======================================== */
+
 .sidebar {
-  --sidebar-width: 48px;
-  --sidebar-expanded-width: 210px;
+  --collapsed-width: 48px;
+  --expanded-width: 220px;
   --orange: #d9732a;
+  --orange-hover: #c86525;
 
-  position: relative;
-
-  width: var(--sidebar-width);
-  min-width: var(--sidebar-width);
+  width: var(--collapsed-width);
+  min-width: var(--collapsed-width);
   height: 100vh;
 
   display: flex;
   flex-direction: column;
 
-  background: linear-gradient(180deg, #172f4b 0%, #183653 55%, #142d47 100%);
+  overflow: hidden;
 
-  color: #eaf1f8;
+  background: linear-gradient(180deg, #193956 0%, #183651 45%, #142e48 100%);
+
+  color: #e9f0f6;
 
   border-right: 1px solid rgba(255, 255, 255, 0.08);
+
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.12);
 
   transition:
     width 180ms ease,
     min-width 180ms ease;
-
-  z-index: 50;
 }
+
+/* Expanded sidebar */
 
 .expanded {
-  width: var(--sidebar-expanded-width);
-  min-width: var(--sidebar-expanded-width);
+  width: var(--expanded-width);
+  min-width: var(--expanded-width);
 }
 
-/* ---------------- */
-/* LOGO             */
-/* ---------------- */
+/* ========================================
+   LOGO
+======================================== */
 
 .logo {
-  height: 52px;
-  min-height: 52px;
+  height: 54px;
+  min-height: 54px;
 
   display: flex;
   align-items: center;
 
-  padding: 0 8px;
-
   gap: 10px;
+
+  padding: 0 8px;
 
   overflow: hidden;
 
@@ -51,64 +58,69 @@
 }
 
 .logoIcon {
-  width: 31px;
-  min-width: 31px;
-  height: 31px;
+  width: 32px;
+  min-width: 32px;
+  height: 32px;
 
   display: grid;
   place-items: center;
 
-  border-radius: 9px;
+  border-radius: 50%;
 
   background: var(--orange);
 
-  color: white;
+  color: #ffffff;
 
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 800;
+
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 .logoText {
-  white-space: nowrap;
+  overflow: hidden;
 
-  font-size: 18px;
+  color: #ffffff;
+
+  font-size: 19px;
   font-weight: 700;
+
+  white-space: nowrap;
 }
 
-/* ---------------- */
-/* NAVIGATION       */
-/* ---------------- */
+/* ========================================
+   NAVIGATION
+======================================== */
 
 .navigation {
-  display: flex;
-  flex-direction: column;
-
-  padding-top: 7px;
+  padding: 7px 0;
 }
 
 .navItem {
   position: relative;
 
   width: 100%;
-  height: 43px;
-
-  padding: 0 14px;
-
-  border: 0;
+  height: 42px;
 
   display: flex;
   align-items: center;
 
-  gap: 13px;
+  gap: 12px;
+
+  padding: 0 14px;
+
+  border: none;
 
   background: transparent;
-  color: #dbe7f2;
-
-  cursor: pointer;
+  color: #dce6ef;
 
   font-family: inherit;
   font-size: 14px;
   font-weight: 500;
+
+  text-align: left;
+
+  cursor: pointer;
 
   white-space: nowrap;
 
@@ -120,28 +132,37 @@
 .navItem:hover {
   background: rgba(255, 255, 255, 0.07);
 
-  color: white;
+  color: #ffffff;
 }
 
+/* Icon container */
+
 .navIcon {
+  width: 20px;
   min-width: 20px;
 
   display: flex;
   align-items: center;
   justify-content: center;
+
+  font-size: 17px;
 }
 
 .navLabel {
   overflow: hidden;
+
   text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-/* ACTIVE */
+/* ========================================
+   ACTIVE
+======================================== */
 
 .active {
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.07);
 
-  color: white;
+  color: #ffffff;
 }
 
 .active::before {
@@ -149,226 +170,358 @@
 
   position: absolute;
 
+  top: 6px;
+  bottom: 6px;
   left: 0;
-  top: 7px;
-  bottom: 7px;
 
   width: 3px;
 
   background: var(--orange);
 
-  border-radius: 0 3px 3px 0;
+  border-radius: 0 4px 4px 0;
 }
 
-/* ---------------- */
-/* DIVIDER          */
-/* ---------------- */
+/* ========================================
+   DIVIDER
+======================================== */
 
 .divider {
   height: 1px;
 
-  margin: 7px 8px;
+  margin: 6px 8px;
 
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.09);
 }
 
-/* ---------------- */
-/* SPACER           */
-/* ---------------- */
+/* ========================================
+   SECTION TITLE
+======================================== */
 
-.spacer {
-  flex: 1;
-}
+.sectionTitle {
+  min-height: 42px;
 
-/* ---------------- */
-/* COLLAPSE         */
-/* ---------------- */
-
-.collapseButton {
-  height: 42px;
-
-  border: 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-
-  display: grid;
-  place-items: center;
-
-  background: transparent;
-  color: #aebed0;
-
-  cursor: pointer;
-}
-
-.collapseButton:hover {
-  background: rgba(255, 255, 255, 0.07);
-
-  color: white;
-}
-
-/* ---------------- */
-/* FLYOUT           */
-/* ---------------- */
-
-.flyout {
-  position: absolute;
-
-  left: calc(100% + 8px);
-
-  width: 240px;
-
-  padding: 12px;
-
-  background: white;
-  color: #172f4b;
-
-  border: 1px solid #dce3ea;
-
-  border-radius: 10px;
-
-  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.18);
-
-  z-index: 100;
-}
-
-.flyoutHeader {
   display: flex;
   align-items: center;
-  justify-content: space-between;
 
-  margin-bottom: 12px;
+  gap: 12px;
+
+  padding: 0 14px;
+
+  color: #e8eef4;
 
   font-size: 14px;
-  font-weight: 700;
+  font-weight: 600;
+
+  white-space: nowrap;
 }
 
-.flyoutHeader button {
-  width: 26px;
-  height: 26px;
+/* ========================================
+   ADMIN SECTION
+======================================== */
 
-  border: 0;
-  border-radius: 6px;
-
-  display: grid;
-  place-items: center;
-
-  background: transparent;
-
-  cursor: pointer;
+.adminSection {
+  width: 100%;
 }
 
-.flyoutHeader button:hover {
-  background: #f1f4f7;
-}
+/* ========================================
+   MNEMONIC AREA
+======================================== */
 
-/* ---------------- */
-/* INPUT            */
-/* ---------------- */
+.mnemonicArea {
+  margin: 0 8px 8px;
+
+  padding: 10px;
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  border-radius: 8px;
+
+  background: rgba(255, 255, 255, 0.045);
+}
 
 .fieldLabel {
   display: block;
 
-  margin-bottom: 5px;
+  margin-bottom: 6px;
 
-  color: #526273;
+  color: #d9e4ed;
 
   font-size: 12px;
   font-weight: 600;
 }
 
-.searchRow {
+/* ========================================
+   INPUT ROW
+======================================== */
+
+.inputRow {
   display: flex;
-  gap: 6px;
+  align-items: center;
+
+  gap: 5px;
 }
 
-.searchRow input {
+.inputRow input {
+  width: 100%;
   min-width: 0;
-  flex: 1;
+  height: 31px;
 
-  height: 34px;
+  padding: 0 8px;
+
+  border: 1px solid #cbd5df;
+  border-radius: 5px;
+
+  background: #ffffff;
+
+  color: #1f2937;
+
+  font-family: inherit;
+  font-size: 12px;
+
+  outline: none;
+}
+
+.inputRow input::placeholder {
+  color: #9ca3af;
+}
+
+.inputRow input:focus {
+  border-color: var(--orange);
+
+  box-shadow: 0 0 0 2px rgba(217, 115, 42, 0.15);
+}
+
+/* ========================================
+   ADD BUTTON
+======================================== */
+
+.addButton {
+  height: 31px;
 
   padding: 0 9px;
 
-  border: 1px solid #ccd5df;
-  border-radius: 6px;
-
-  outline: none;
-
-  font-size: 13px;
-}
-
-.searchRow input:focus {
-  border-color: var(--orange);
-
-  box-shadow: 0 0 0 2px rgba(217, 115, 42, 0.12);
-}
-
-.searchButton {
-  height: 34px;
-  min-width: 38px;
-
-  padding: 0 10px;
-
-  border: 0;
-  border-radius: 6px;
-
-  display: grid;
-  place-items: center;
+  border: none;
+  border-radius: 5px;
 
   background: var(--orange);
-  color: white;
+
+  color: #ffffff;
+
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
 
   cursor: pointer;
 }
 
-.searchButton:hover {
-  opacity: 0.9;
+.addButton:hover {
+  background: var(--orange-hover);
 }
 
-/* ---------------- */
-/* TAGS             */
-/* ---------------- */
+/* ========================================
+   MNEMONIC TAGS
+======================================== */
 
-.tags {
+.mnemonicTags {
   display: flex;
   flex-wrap: wrap;
 
   gap: 5px;
 
-  margin-top: 10px;
+  margin-top: 8px;
 }
 
-.tags span {
+.mnemonicTag {
   padding: 4px 8px;
 
   border-radius: 5px;
 
-  background: #fff1e7;
-  color: #a94e10;
+  background: var(--orange);
 
+  color: #ffffff;
+
+  font-size: 10px;
+  font-weight: 700;
+
+  line-height: 1;
+}
+
+/* ========================================
+   ADMIN ITEM
+======================================== */
+
+.orangeItem .navIcon {
+  color: var(--orange);
+}
+
+.orangeIcon {
+  color: var(--orange);
+}
+
+/* ========================================
+   RECORD NUMBER
+======================================== */
+
+.recordSection {
+  width: 100%;
+
+  padding-bottom: 8px;
+}
+
+/* Record input is ALWAYS directly
+   underneath Record Number */
+
+.recordContent {
+  padding: 0 8px 4px;
+}
+
+.recordSearch {
+  display: flex;
+  align-items: center;
+
+  gap: 5px;
+}
+
+.recordSearch input {
+  width: 100%;
+  min-width: 0;
+
+  height: 31px;
+
+  padding: 0 8px;
+
+  border: 1px solid #cbd5df;
+  border-radius: 5px;
+
+  background: #ffffff;
+
+  color: #1f2937;
+
+  font-family: inherit;
+  font-size: 12px;
+
+  outline: none;
+}
+
+.recordSearch input::placeholder {
+  color: #9ca3af;
+}
+
+.recordSearch input:focus {
+  border-color: var(--orange);
+
+  box-shadow: 0 0 0 2px rgba(217, 115, 42, 0.15);
+}
+
+/* ========================================
+   GO BUTTON
+======================================== */
+
+.goButton {
+  width: 36px;
+  min-width: 36px;
+  height: 31px;
+
+  padding: 0;
+
+  border: none;
+  border-radius: 5px;
+
+  display: grid;
+  place-items: center;
+
+  background: var(--orange);
+
+  color: #ffffff;
+
+  font-family: inherit;
   font-size: 11px;
   font-weight: 700;
+
+  cursor: pointer;
+
+  transition: background 140ms ease;
 }
+
+.goButton:hover {
+  background: var(--orange-hover);
+}
+
+/* ========================================
+   ASSISTANCE
+======================================== */
 
 .assistanceText {
-  margin-top: 7px;
+  margin-top: 5px;
 
-  color: var(--orange);
+  color: #f18a40;
 
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 600;
+
+  text-align: center;
+
+  white-space: nowrap;
 }
 
-/* ---------------- */
-/* SMALL SCREENS    */
-/* ---------------- */
+/* ========================================
+   SPACER
+======================================== */
 
-@media (max-width: 600px) {
+.spacer {
+  flex: 1;
+}
+
+/* ========================================
+   BOTTOM
+======================================== */
+
+.bottomSection {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* ========================================
+   COLLAPSE BUTTON
+======================================== */
+
+.collapseButton {
+  width: 100%;
+  height: 38px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  padding: 0 15px;
+
+  border: none;
+
+  background: transparent;
+
+  color: #9fb0bf;
+
+  font-family: inherit;
+  font-size: 12px;
+
+  cursor: pointer;
+
+  white-space: nowrap;
+}
+
+.collapseButton:hover {
+  background: rgba(255, 255, 255, 0.06);
+
+  color: #ffffff;
+}
+
+/* ========================================
+   RESPONSIVE
+======================================== */
+
+@media (max-width: 768px) {
   .expanded {
-    width: 185px;
-    min-width: 185px;
-  }
-
-  .flyout {
-    width: 210px;
+    width: 200px;
+    min-width: 200px;
   }
 }
