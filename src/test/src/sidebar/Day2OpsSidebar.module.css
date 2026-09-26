@@ -1,21 +1,24 @@
-/* =========================================
-   SIDEBAR
-========================================= */
+/* =========================================================
+   DAY2OPS SIDEBAR
+   Expanded: 220px
+   Collapsed: 48px
+   Primary: #d9732a
+========================================================= */
 
 .sidebar {
   --collapsed-width: 48px;
   --expanded-width: 220px;
 
   --primary: #d9732a;
-  --primary-hover: #c86420;
-  --primary-light: #fff5ed;
+  --primary-hover: #c66320;
 
-  --text: #344054;
-  --text-muted: #667085;
+  --nav-top: #193a57;
+  --nav-middle: #183650;
+  --nav-bottom: #142e47;
 
-  --border: #e4e7ec;
-  --background: #ffffff;
-  --hover: #f8fafc;
+  --text: #dce6ef;
+  --text-bright: #ffffff;
+  --text-muted: #9eb0c0;
 
   width: var(--collapsed-width);
   min-width: var(--collapsed-width);
@@ -23,30 +26,41 @@
 
   display: flex;
   flex-direction: column;
+
   flex-shrink: 0;
 
   overflow: hidden;
 
-  background: var(--background);
+  background: linear-gradient(
+    180deg,
+    var(--nav-top) 0%,
+    var(--nav-middle) 45%,
+    var(--nav-bottom) 100%
+  );
+
   color: var(--text);
 
-  border-right: 1px solid var(--border);
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
 
-  box-shadow: 2px 0 8px rgba(16, 24, 40, 0.04);
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.12);
 
   transition:
     width 180ms ease,
     min-width 180ms ease;
 }
 
+/* =========================================================
+   EXPANDED
+========================================================= */
+
 .expanded {
   width: var(--expanded-width);
   min-width: var(--expanded-width);
 }
 
-/* =========================================
+/* =========================================================
    LOGO
-========================================= */
+========================================================= */
 
 .logo {
   height: 54px;
@@ -61,7 +75,7 @@
 
   overflow: hidden;
 
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .logoMark {
@@ -72,7 +86,7 @@
   display: grid;
   place-items: center;
 
-  border-radius: 8px;
+  border-radius: 50%;
 
   background: var(--primary);
   color: #ffffff;
@@ -80,29 +94,31 @@
   font-size: 15px;
   font-weight: 800;
 
-  box-shadow: 0 2px 5px rgba(217, 115, 42, 0.25);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
 }
 
 .logoText {
-  color: #25364a;
+  overflow: hidden;
 
-  font-size: 17px;
+  color: #ffffff;
+
+  font-size: 18px;
   font-weight: 700;
 
   white-space: nowrap;
 }
 
-/* =========================================
-   NAVIGATION
-========================================= */
+/* =========================================================
+   MAIN NAVIGATION
+========================================================= */
 
 .navigation {
   padding: 7px 0;
 }
 
-/* =========================================
+/* =========================================================
    NAV ITEM
-========================================= */
+========================================================= */
 
 .navItem {
   position: relative;
@@ -120,13 +136,14 @@
   border: none;
 
   background: transparent;
-  color: var(--text-muted);
+  color: var(--text);
 
   font-family: inherit;
   font-size: 12px;
   font-weight: 500;
 
   text-align: left;
+
   white-space: nowrap;
 
   cursor: pointer;
@@ -137,17 +154,18 @@
 }
 
 .navItem:hover {
-  background: var(--hover);
-  color: var(--primary);
+  background: rgba(255, 255, 255, 0.07);
+
+  color: #ffffff;
 }
 
 .navItem:hover .iconContainer {
-  color: var(--primary);
+  color: #ffffff;
 }
 
-/* =========================================
-   ICON
-========================================= */
+/* =========================================================
+   NAV ICON
+========================================================= */
 
 .iconContainer {
   width: 20px;
@@ -157,26 +175,33 @@
   align-items: center;
   justify-content: center;
 
-  color: #667085;
+  color: #c7d3df;
 
   font-size: 15px;
 
   transition: color 120ms ease;
 }
 
+/* =========================================================
+   NAV LABEL
+========================================================= */
+
 .navLabel {
   overflow: hidden;
 
   text-overflow: ellipsis;
+
+  white-space: nowrap;
 }
 
-/* =========================================
-   ACTIVE NAV
-========================================= */
+/* =========================================================
+   ACTIVE NAV ITEM
+========================================================= */
 
 .active {
-  background: var(--primary-light);
-  color: var(--primary);
+  background: rgba(255, 255, 255, 0.07);
+
+  color: #ffffff;
 
   font-weight: 600;
 }
@@ -201,21 +226,25 @@
   border-radius: 0 4px 4px 0;
 }
 
-/* =========================================
+/* =========================================================
    DIVIDER
-========================================= */
+========================================================= */
 
 .divider {
+  width: auto;
   height: 1px;
 
   margin: 6px 8px;
 
-  background: var(--border);
+  flex-shrink: 0;
+
+  background: rgba(255, 255, 255, 0.08);
 }
 
-/* =========================================
+/* =========================================================
    SECTION HEADING
-========================================= */
+   Live Servers / Record Number
+========================================================= */
 
 .sectionHeading {
   min-height: 40px;
@@ -227,7 +256,7 @@
 
   padding: 0 14px;
 
-  color: #475467;
+  color: #e3ebf2;
 
   font-size: 12px;
   font-weight: 600;
@@ -239,35 +268,40 @@
   color: var(--primary);
 }
 
-/* =========================================
+/* =========================================================
    MNEMONIC CARD
-========================================= */
+========================================================= */
 
 .mnemonicCard {
   margin: 0 8px 8px;
 
   padding: 9px;
 
-  background: #f8fafc;
+  border: 1px solid rgba(255, 255, 255, 0.09);
 
-  border: 1px solid var(--border);
-  border-radius: 7px;
+  border-radius: 6px;
+
+  background: rgba(255, 255, 255, 0.045);
 }
+
+/* =========================================================
+   CARD LABEL
+========================================================= */
 
 .cardLabel {
   display: block;
 
   margin-bottom: 5px;
 
-  color: #475467;
+  color: #d9e4ed;
 
   font-size: 10px;
   font-weight: 600;
 }
 
-/* =========================================
-   INPUT ROW
-========================================= */
+/* =========================================================
+   MNEMONIC INPUT ROW
+========================================================= */
 
 .inputRow {
   display: flex;
@@ -283,20 +317,25 @@
 
   padding: 0 7px;
 
-  border: 1px solid #d0d5dd;
+  border: 1px solid #ccd5df;
+
   border-radius: 4px;
 
   background: #ffffff;
-  color: #344054;
+  color: #26384a;
 
   font-family: inherit;
   font-size: 11px;
 
   outline: none;
+
+  transition:
+    border-color 120ms ease,
+    box-shadow 120ms ease;
 }
 
 .inputRow input::placeholder {
-  color: #98a2b3;
+  color: #9aa7b5;
 }
 
 .inputRow input:focus {
@@ -305,16 +344,19 @@
   box-shadow: 0 0 0 2px rgba(217, 115, 42, 0.12);
 }
 
-/* =========================================
+/* =========================================================
    ADD BUTTON
-========================================= */
+========================================================= */
 
 .addButton {
   height: 30px;
 
   padding: 0 9px;
 
+  flex-shrink: 0;
+
   border: none;
+
   border-radius: 4px;
 
   background: var(--primary);
@@ -325,15 +367,17 @@
   font-weight: 700;
 
   cursor: pointer;
+
+  transition: background 120ms ease;
 }
 
 .addButton:hover {
   background: var(--primary-hover);
 }
 
-/* =========================================
+/* =========================================================
    MNEMONIC TAGS
-========================================= */
+========================================================= */
 
 .mnemonicTags {
   display: flex;
@@ -343,6 +387,10 @@
 
   margin-top: 7px;
 }
+
+/* =========================================================
+   MNEMONIC TAG
+========================================================= */
 
 .mnemonicTag {
   height: 23px;
@@ -354,15 +402,19 @@
 
   padding: 0 5px 0 7px;
 
-  background: var(--primary-light);
-  color: #b65314;
-
-  border: 1px solid #f4c7a7;
   border-radius: 4px;
+
+  background: var(--primary);
+
+  color: #ffffff;
 
   font-size: 9px;
   font-weight: 700;
 }
+
+/* =========================================================
+   MNEMONIC REMOVE BUTTON
+========================================================= */
 
 .mnemonicTag button {
   width: 16px;
@@ -374,10 +426,12 @@
   padding: 0;
 
   border: none;
+
   border-radius: 3px;
 
   background: transparent;
-  color: #b65314;
+
+  color: rgba(255, 255, 255, 0.85);
 
   font-size: 9px;
 
@@ -385,15 +439,17 @@
 }
 
 .mnemonicTag button:hover {
-  background: #f9dfcc;
+  background: rgba(0, 0, 0, 0.15);
+
+  color: #ffffff;
 }
 
-/* =========================================
+/* =========================================================
    ADMIN
-========================================= */
+========================================================= */
 
 .orangeItem {
-  color: var(--primary);
+  color: #ffffff;
 }
 
 .orangeItem .iconContainer {
@@ -404,17 +460,17 @@
   color: var(--primary);
 }
 
-/* =========================================
+/* =========================================================
    RECORD SECTION
-========================================= */
+========================================================= */
 
 .recordSection {
   width: 100%;
 }
 
-/* =========================================
-   RECORD WHITE BOX
-========================================= */
+/* =========================================================
+   RECORD NUMBER WHITE BOX
+========================================================= */
 
 .recordCard {
   margin: 0 8px 8px;
@@ -423,15 +479,18 @@
 
   background: #ffffff;
 
-  border: 1px solid #dfe3e8;
-  border-radius: 7px;
+  border: 1px solid #e0e5eb;
 
-  box-shadow: 0 2px 7px rgba(16, 24, 40, 0.08);
+  border-radius: 6px;
+
+  box-shadow:
+    0 2px 5px rgba(0, 0, 0, 0.12),
+    0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
-/* =========================================
+/* =========================================================
    RECORD SEARCH
-========================================= */
+========================================================= */
 
 .recordSearch {
   display: flex;
@@ -440,6 +499,10 @@
   gap: 5px;
 }
 
+/* =========================================================
+   RECORD INPUT
+========================================================= */
+
 .recordSearch input {
   width: 100%;
   min-width: 0;
@@ -447,20 +510,27 @@
 
   padding: 0 7px;
 
-  background: #f9fafb;
-  color: #344054;
+  border: 1px solid #ccd5df;
 
-  border: 1px solid #d0d5dd;
   border-radius: 4px;
+
+  background: #f8fafc;
+
+  color: #26384a;
 
   font-family: inherit;
   font-size: 11px;
 
   outline: none;
+
+  transition:
+    border-color 120ms ease,
+    box-shadow 120ms ease,
+    background 120ms ease;
 }
 
 .recordSearch input::placeholder {
-  color: #98a2b3;
+  color: #9aa7b5;
 }
 
 .recordSearch input:focus {
@@ -471,9 +541,9 @@
   box-shadow: 0 0 0 2px rgba(217, 115, 42, 0.12);
 }
 
-/* =========================================
+/* =========================================================
    GO BUTTON
-========================================= */
+========================================================= */
 
 .goButton {
   width: 35px;
@@ -486,9 +556,11 @@
   place-items: center;
 
   border: none;
+
   border-radius: 4px;
 
   background: var(--primary);
+
   color: #ffffff;
 
   font-family: inherit;
@@ -496,15 +568,17 @@
   font-weight: 700;
 
   cursor: pointer;
+
+  transition: background 120ms ease;
 }
 
 .goButton:hover {
   background: var(--primary-hover);
 }
 
-/* =========================================
-   ASSISTANCE
-========================================= */
+/* =========================================================
+   CHG/INC ASSISTANCE
+========================================================= */
 
 .assistanceText {
   margin-top: 6px;
@@ -519,25 +593,29 @@
   white-space: nowrap;
 }
 
-/* =========================================
-   PUSH BOTTOM DOWN
-========================================= */
+/* =========================================================
+   SPACER
+   Pushes logout/collapse to bottom
+========================================================= */
 
 .spacer {
   flex: 1;
+  min-height: 10px;
 }
 
-/* =========================================
-   BOTTOM
-========================================= */
+/* =========================================================
+   BOTTOM SECTION
+========================================================= */
 
 .bottom {
-  border-top: 1px solid var(--border);
+  flex-shrink: 0;
+
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-/* =========================================
-   COLLAPSE
-========================================= */
+/* =========================================================
+   COLLAPSE BUTTON
+========================================================= */
 
 .collapseButton {
   width: 100%;
@@ -552,32 +630,96 @@
 
   border: none;
 
-  background: #ffffff;
-  color: #667085;
+  background: transparent;
+
+  color: var(--text-muted);
 
   font-family: inherit;
   font-size: 11px;
+  font-weight: 500;
+
+  text-align: left;
 
   white-space: nowrap;
 
   cursor: pointer;
+
+  transition:
+    background 120ms ease,
+    color 120ms ease;
 }
 
 .collapseButton .iconContainer {
-  color: var(--primary);
+  color: #c7d3df;
 }
 
 .collapseButton:hover {
-  background: var(--primary-light);
+  background: rgba(255, 255, 255, 0.06);
+
+  color: #ffffff;
+}
+
+.collapseButton:hover .iconContainer {
   color: var(--primary);
 }
 
-/* =========================================
+/* =========================================================
    COLLAPSED SIDEBAR
-========================================= */
+   Exactly 48px
+========================================================= */
 
-.sidebar:not(.expanded) .navItem,
-.sidebar:not(.expanded) .sectionHeading,
+.sidebar:not(.expanded) {
+  width: 48px;
+  min-width: 48px;
+}
+
+/* Center logo */
+
+.sidebar:not(.expanded) .logo {
+  justify-content: center;
+
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* Smaller logo to fit 48px comfortably */
+
+.sidebar:not(.expanded) .logoMark {
+  width: 30px;
+  min-width: 30px;
+  height: 30px;
+}
+
+/* Center regular nav icons */
+
+.sidebar:not(.expanded) .navItem {
+  justify-content: center;
+
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.sidebar:not(.expanded) .navItem .iconContainer {
+  width: 48px;
+  min-width: 48px;
+}
+
+/* Center section icons */
+
+.sidebar:not(.expanded) .sectionHeading {
+  justify-content: center;
+
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.sidebar:not(.expanded) .sectionHeading .iconContainer {
+  width: 48px;
+  min-width: 48px;
+}
+
+/* Center collapse icon */
+
 .sidebar:not(.expanded) .collapseButton {
   justify-content: center;
 
@@ -585,18 +727,69 @@
   padding-right: 0;
 }
 
-.sidebar:not(.expanded) .iconContainer {
+.sidebar:not(.expanded) .collapseButton .iconContainer {
   width: 48px;
   min-width: 48px;
 }
 
-/* =========================================
-   RESPONSIVE
-========================================= */
+/* Smaller divider */
+
+.sidebar:not(.expanded) .divider {
+  margin-left: 8px;
+  margin-right: 8px;
+}
+
+/* =========================================================
+   SCROLLBAR
+========================================================= */
+
+.sidebar {
+  scrollbar-width: thin;
+
+  scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
+}
+
+.sidebar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+
+  border-radius: 10px;
+}
+
+/* =========================================================
+   FOCUS ACCESSIBILITY
+========================================================= */
+
+.navItem:focus-visible,
+.collapseButton:focus-visible,
+.addButton:focus-visible,
+.goButton:focus-visible,
+.mnemonicTag button:focus-visible {
+  outline: 2px solid var(--primary);
+
+  outline-offset: -2px;
+}
+
+/* =========================================================
+   SMALLER SCREENS
+========================================================= */
 
 @media (max-width: 700px) {
   .expanded {
     width: 190px;
     min-width: 190px;
+  }
+
+  .mnemonicCard,
+  .recordCard {
+    margin-left: 6px;
+    margin-right: 6px;
   }
 }
