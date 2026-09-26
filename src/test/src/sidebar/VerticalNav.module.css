@@ -1,0 +1,411 @@
+/* =========================================
+   NAVBAR
+========================================= */
+
+.nav {
+  --orange: #d9732a;
+  --orange-hover: #c66320;
+
+  width: 48px;
+  flex: 0 0 48px;
+
+  height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+
+  overflow: hidden;
+
+  background: linear-gradient(180deg, #193a57 0%, #183650 50%, #142e47 100%);
+
+  color: #dce6ef;
+
+  transition:
+    width 180ms ease,
+    flex-basis 180ms ease;
+}
+
+/* =========================================
+   EXPANDED
+========================================= */
+
+.expanded {
+  width: 220px;
+  flex-basis: 220px;
+}
+
+/* =========================================
+   LOGO
+========================================= */
+
+.logo {
+  height: 52px;
+  min-height: 52px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  padding: 0 8px;
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.logoIcon {
+  width: 32px;
+  min-width: 32px;
+  height: 32px;
+
+  display: grid;
+  place-items: center;
+
+  background: var(--orange);
+  color: white;
+
+  border-radius: 8px;
+
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.logoText {
+  color: white;
+
+  font-size: 17px;
+  font-weight: 700;
+
+  white-space: nowrap;
+}
+
+/* =========================================
+   MENU
+========================================= */
+
+.menu {
+  padding: 6px 0;
+}
+
+/* =========================================
+   NAV ITEM
+========================================= */
+
+.navItem {
+  position: relative;
+
+  width: 100%;
+  height: 40px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 11px;
+
+  padding: 0 16px;
+
+  border: 0;
+
+  background: transparent;
+  color: #dce6ef;
+
+  font-size: 12px;
+  font-weight: 500;
+
+  text-align: left;
+  white-space: nowrap;
+
+  cursor: pointer;
+}
+
+.navItem > svg {
+  width: 16px;
+  min-width: 16px;
+}
+
+.navItem:hover {
+  background: rgba(255, 255, 255, 0.07);
+
+  color: #ffffff;
+}
+
+/* =========================================
+   ACTIVE
+========================================= */
+
+.active {
+  background: rgba(255, 255, 255, 0.07);
+
+  color: #ffffff;
+}
+
+.active > svg {
+  color: var(--orange);
+}
+
+.active::before {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  top: 7px;
+  bottom: 7px;
+
+  width: 3px;
+
+  background: var(--orange);
+
+  border-radius: 0 3px 3px 0;
+}
+
+/* =========================================
+   DIVIDER
+========================================= */
+
+.divider {
+  height: 1px;
+
+  margin: 5px 8px;
+
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* =========================================
+   SECTION TITLE
+========================================= */
+
+.sectionTitle {
+  height: 38px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 11px;
+
+  padding: 0 16px;
+
+  color: #e3ebf2;
+
+  font-size: 11px;
+  font-weight: 600;
+
+  white-space: nowrap;
+}
+
+.sectionTitle > svg {
+  width: 16px;
+  min-width: 16px;
+
+  color: var(--orange);
+}
+
+/* =========================================
+   MNEMONIC BOX
+========================================= */
+
+.mnemonicBox {
+  margin: 0 8px 7px;
+
+  padding: 8px;
+
+  border: 1px solid rgba(255, 255, 255, 0.09);
+
+  border-radius: 6px;
+
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.mnemonicBox label {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: #d5e0e9;
+
+  font-size: 10px;
+  font-weight: 600;
+}
+
+/* =========================================
+   INPUT
+========================================= */
+
+.inputRow {
+  display: flex;
+
+  gap: 5px;
+}
+
+.inputRow input {
+  flex: 1;
+  min-width: 0;
+
+  height: 29px;
+
+  padding: 0 7px;
+
+  border: 1px solid #d1d8df;
+  border-radius: 4px;
+
+  outline: none;
+
+  background: #ffffff;
+
+  color: #26384a;
+
+  font-size: 10px;
+}
+
+.inputRow input:focus {
+  border-color: var(--orange);
+
+  box-shadow: 0 0 0 2px rgba(217, 115, 42, 0.15);
+}
+
+.inputRow button {
+  height: 29px;
+
+  padding: 0 9px;
+
+  border: 0;
+  border-radius: 4px;
+
+  background: var(--orange);
+  color: #ffffff;
+
+  font-size: 10px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.inputRow button:hover {
+  background: var(--orange-hover);
+}
+
+/* =========================================
+   TAGS
+========================================= */
+
+.tags {
+  display: flex;
+
+  gap: 4px;
+
+  margin-top: 6px;
+}
+
+.tags span {
+  padding: 4px 7px;
+
+  border-radius: 4px;
+
+  background: var(--orange);
+  color: white;
+
+  font-size: 9px;
+  font-weight: 700;
+}
+
+/* =========================================
+   RECORD WHITE BOX
+========================================= */
+
+.recordBox {
+  margin: 0 8px 8px;
+
+  padding: 8px;
+
+  background: #ffffff;
+
+  border-radius: 6px;
+
+  box-shadow: 0 2px 7px rgba(0, 0, 0, 0.15);
+}
+
+.recordBox input {
+  background: #f8fafc;
+}
+
+/* =========================================
+   ASSISTANCE
+========================================= */
+
+.assistance {
+  margin-top: 5px;
+
+  color: var(--orange);
+
+  font-size: 9px;
+  font-weight: 700;
+
+  text-align: center;
+}
+
+/* =========================================
+   SPACER
+========================================= */
+
+.spacer {
+  flex: 1;
+}
+
+/* =========================================
+   TOGGLE
+========================================= */
+
+.toggle {
+  width: 100%;
+  height: 40px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 11px;
+
+  padding: 0 16px;
+
+  border: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+
+  background: transparent;
+
+  color: #9eb0c0;
+
+  font-size: 11px;
+
+  cursor: pointer;
+
+  white-space: nowrap;
+}
+
+.toggle > svg {
+  width: 16px;
+  min-width: 16px;
+}
+
+.toggle:hover {
+  background: rgba(255, 255, 255, 0.06);
+
+  color: #ffffff;
+}
+
+/* =========================================
+   COLLAPSED
+========================================= */
+
+.nav:not(.expanded) .logo,
+.nav:not(.expanded) .navItem,
+.nav:not(.expanded) .sectionTitle,
+.nav:not(.expanded) .toggle {
+  justify-content: center;
+
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.nav:not(.expanded) .navItem,
+.nav:not(.expanded) .sectionTitle,
+.nav:not(.expanded) .toggle {
+  gap: 0;
+}

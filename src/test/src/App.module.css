@@ -1,23 +1,21 @@
-.appLayout {
-  width: 100%;
-  min-height: 100vh;
+.app {
+  width: 100vw;
+  height: 100vh;
 
   display: flex;
+
+  overflow: hidden;
 
   background: #ffffff;
 }
 
-/*
-  Main content automatically takes
-  ALL remaining space.
-*/
-.mainContent {
+.main {
   flex: 1;
-
-  /* Very important with flex layouts */
   min-width: 0;
 
-  min-height: 100vh;
+  height: 100vh;
+
+  overflow: auto;
 
   background: #ffffff;
 }

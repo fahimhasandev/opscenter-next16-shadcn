@@ -1,26 +1,20 @@
 import { useState } from "react";
 import styles from "./App.module.css";
-import Day2OpsSidebar from "./sidebar/Day2OpsSidebar";
 
-function App() {
-  const [expanded, setExpanded] = useState(true);
+export default function App() {
+  const [navExpanded, setNavExpanded] = useState(true);
 
   return (
-    <div className={styles.shell}>
-      <Day2OpsSidebar
+    <div className={styles.app}>
+      {/* LEFT */}
+      <VerticalNav
+        expanded={navExpanded}
+        onToggle={() => setNavExpanded(!navExpanded)}
         role="ADMIN"
-        expanded={expanded}
-        onExpandedChange={setExpanded}
       />
 
-      <main className={styles.main}>{children}</main>
-
-      {/*
-        Put your global modal/notification
-        provider/component here if needed.
-      */}
+      {/* RIGHT */}
+      <main className={styles.main}>{/* Your application goes here */}</main>
     </div>
   );
 }
-
-export default App;
