@@ -1,0 +1,509 @@
+/* =========================================
+   APPLICATION
+========================================= */
+
+.app {
+  width: 100%;
+  min-height: 100vh;
+
+  display: flex;
+
+  background: #f4f6f8;
+}
+
+/* =========================================
+   MAIN
+========================================= */
+
+.main {
+  flex: 1;
+  min-width: 0;
+
+  min-height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+
+  overflow: hidden;
+}
+
+/*
+IMPORTANT:
+
+There is NO:
+
+margin-left: 220px;
+
+The sidebar is part of the flex layout.
+
+When sidebar:
+220px -> 48px
+
+main automatically gets the extra space.
+*/
+
+/* =========================================
+   HEADER
+========================================= */
+
+.header {
+  min-height: 68px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  padding: 10px 18px;
+
+  background: #ffffff;
+
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.header h1 {
+  margin: 0;
+
+  color: #172f4b;
+
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.header p {
+  margin: 3px 0 0;
+
+  color: #64748b;
+
+  font-size: 12px;
+}
+
+/* =========================================
+   ROLE SWITCHER
+========================================= */
+
+.roleSwitcher {
+  display: flex;
+  align-items: center;
+
+  gap: 5px;
+}
+
+.roleSwitcher span {
+  margin-right: 5px;
+
+  color: #64748b;
+
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.roleSwitcher button {
+  height: 30px;
+
+  padding: 0 11px;
+
+  border: 1px solid #d7dee7;
+  border-radius: 5px;
+
+  background: #ffffff;
+
+  color: #475569;
+
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.roleSwitcher button:hover {
+  background: #f8fafc;
+}
+
+.roleSwitcher .selectedRole {
+  border-color: #d9732a;
+
+  background: #fff7f1;
+
+  color: #c45e19;
+}
+
+/* =========================================
+   WORKSPACE
+
+   THREE COLUMNS
+========================================= */
+
+.workspace {
+  flex: 1;
+  min-width: 0;
+
+  display: grid;
+
+  grid-template-columns:
+    minmax(190px, 0.8fr)
+    minmax(300px, 1.3fr)
+    minmax(280px, 1fr);
+
+  gap: 10px;
+
+  padding: 10px;
+
+  overflow: auto;
+}
+
+/* =========================================
+   PANEL
+========================================= */
+
+.panel {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  overflow: hidden;
+
+  background: #ffffff;
+
+  border: 1px solid #dfe5ec;
+  border-radius: 8px;
+
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+/* =========================================
+   PANEL HEADER
+========================================= */
+
+.panelHeader {
+  min-height: 48px;
+
+  display: flex;
+  align-items: center;
+
+  padding: 8px 12px;
+
+  background: #fafbfc;
+
+  border-bottom: 1px solid #e6ebf0;
+}
+
+.panelHeader > div {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+}
+
+.panelHeader h2 {
+  margin: 0;
+
+  color: #172f4b;
+
+  font-size: 14px;
+  font-weight: 700;
+}
+
+/* =========================================
+   STEP
+========================================= */
+
+.stepNumber {
+  width: 25px;
+  height: 25px;
+
+  display: grid;
+  place-items: center;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  background: #d9732a;
+
+  color: #ffffff;
+
+  font-size: 11px;
+  font-weight: 700;
+}
+
+/* =========================================
+   PANEL BODY
+========================================= */
+
+.panelBody {
+  flex: 1;
+
+  padding: 12px;
+
+  overflow: auto;
+}
+
+.description {
+  margin: 0 0 13px;
+
+  color: #64748b;
+
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+/* =========================================
+   TEMPLATES
+========================================= */
+
+.templateList {
+  display: flex;
+  flex-direction: column;
+
+  gap: 7px;
+}
+
+.templateCard {
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 4px;
+
+  padding: 10px;
+
+  border: 1px solid #dce3ea;
+  border-radius: 6px;
+
+  background: #ffffff;
+
+  color: #334155;
+
+  text-align: left;
+
+  cursor: pointer;
+
+  transition:
+    border-color 120ms ease,
+    background 120ms ease;
+}
+
+.templateCard:hover {
+  border-color: #d9732a;
+
+  background: #fffaf6;
+}
+
+.templateCard strong {
+  color: #263b50;
+
+  font-size: 11px;
+}
+
+.templateCard span {
+  color: #718096;
+
+  font-size: 10px;
+  line-height: 1.4;
+}
+
+.templateSelected {
+  border-color: #d9732a;
+
+  background: #fff7f1;
+}
+
+/* =========================================
+   FORM
+========================================= */
+
+.formGroup {
+  margin-bottom: 13px;
+}
+
+.formGroup label {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: #334155;
+
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.formGroup select,
+.formGroup textarea {
+  width: 100%;
+
+  border: 1px solid #d2dae4;
+  border-radius: 5px;
+
+  background: #ffffff;
+
+  color: #334155;
+
+  font-family: inherit;
+  font-size: 11px;
+
+  outline: none;
+}
+
+.formGroup select {
+  height: 34px;
+
+  padding: 0 8px;
+}
+
+.formGroup textarea {
+  padding: 8px;
+
+  resize: vertical;
+}
+
+.formGroup select:focus,
+.formGroup textarea:focus {
+  border-color: #d9732a;
+
+  box-shadow: 0 0 0 2px rgba(217, 115, 42, 0.12);
+}
+
+/* =========================================
+   REVIEW
+========================================= */
+
+.reviewBox {
+  overflow: hidden;
+
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+
+  background: #f8fafc;
+}
+
+.reviewItem {
+  min-height: 39px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 10px;
+
+  padding: 7px 10px;
+
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.reviewItem:last-child {
+  border-bottom: none;
+}
+
+.reviewItem span {
+  color: #64748b;
+
+  font-size: 10px;
+}
+
+.reviewItem strong {
+  overflow: hidden;
+
+  color: #334155;
+
+  font-size: 10px;
+
+  text-align: right;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* =========================================
+   OUTPUT
+========================================= */
+
+.outputTitle {
+  margin: 16px 0 6px;
+
+  color: #334155;
+
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.codeBox {
+  margin: 0;
+
+  overflow: auto;
+
+  padding: 10px;
+
+  border-radius: 6px;
+
+  background: #172f4b;
+
+  color: #dce7f1;
+
+  font-size: 10px;
+  line-height: 1.6;
+}
+
+/* =========================================
+   GENERATE BUTTON
+========================================= */
+
+.generateButton {
+  width: 100%;
+  height: 35px;
+
+  margin-top: 12px;
+
+  border: none;
+  border-radius: 5px;
+
+  background: #d9732a;
+
+  color: #ffffff;
+
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.generateButton:hover {
+  background: #c66320;
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 1050px) {
+  .workspace {
+    grid-template-columns:
+      minmax(180px, 0.8fr)
+      minmax(280px, 1.2fr);
+
+    align-content: start;
+  }
+
+  .panel:nth-child(3) {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 700px) {
+  .header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .workspace {
+    grid-template-columns: 1fr;
+  }
+
+  .panel:nth-child(3) {
+    grid-column: auto;
+  }
+}
