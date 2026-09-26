@@ -1,13 +1,14 @@
 /* =========================================================
    DAY2OPS SIDEBAR
-   Expanded: 220px
-   Collapsed: 48px
-   Primary: #d9732a
+   ---------------------------------------------------------
+   Expanded width : 220px
+   Collapsed width: 48px
+   Primary color  : #d9732a
 ========================================================= */
 
 .sidebar {
-  --collapsed-width: 48px;
-  --expanded-width: 220px;
+  --sidebar-collapsed: 48px;
+  --sidebar-expanded: 220px;
 
   --primary: #d9732a;
   --primary-hover: #c66320;
@@ -16,17 +17,23 @@
   --nav-middle: #183650;
   --nav-bottom: #142e47;
 
-  --text: #dce6ef;
-  --text-bright: #ffffff;
-  --text-muted: #9eb0c0;
+  --nav-text: #dce6ef;
+  --nav-text-muted: #9eb0c0;
+  --nav-icon: #c7d3df;
 
-  width: var(--collapsed-width);
-  min-width: var(--collapsed-width);
+  width: var(--sidebar-collapsed);
+  min-width: var(--sidebar-collapsed);
   height: 100vh;
 
   display: flex;
   flex-direction: column;
 
+  /*
+    IMPORTANT:
+    Prevent flex parent from shrinking sidebar.
+    Main content with flex: 1 will automatically
+    take the remaining space.
+  */
   flex-shrink: 0;
 
   overflow: hidden;
@@ -38,7 +45,7 @@
     var(--nav-bottom) 100%
   );
 
-  color: var(--text);
+  color: var(--nav-text);
 
   border-right: 1px solid rgba(255, 255, 255, 0.08);
 
@@ -50,12 +57,12 @@
 }
 
 /* =========================================================
-   EXPANDED
+   EXPANDED SIDEBAR
 ========================================================= */
 
 .expanded {
-  width: var(--expanded-width);
-  min-width: var(--expanded-width);
+  width: var(--sidebar-expanded);
+  min-width: var(--sidebar-expanded);
 }
 
 /* =========================================================
@@ -63,6 +70,7 @@
 ========================================================= */
 
 .logo {
+  width: 100%;
   height: 54px;
   min-height: 54px;
 
@@ -86,9 +94,12 @@
   display: grid;
   place-items: center;
 
+  flex-shrink: 0;
+
   border-radius: 50%;
 
   background: var(--primary);
+
   color: #ffffff;
 
   font-size: 15px;
@@ -98,6 +109,8 @@
 }
 
 .logoText {
+  min-width: 0;
+
   overflow: hidden;
 
   color: #ffffff;
@@ -105,6 +118,7 @@
   font-size: 18px;
   font-weight: 700;
 
+  text-overflow: ellipsis;
   white-space: nowrap;
 }
 
@@ -113,6 +127,8 @@
 ========================================================= */
 
 .navigation {
+  width: 100%;
+
   padding: 7px 0;
 }
 
@@ -133,10 +149,11 @@
 
   padding: 0 14px;
 
-  border: none;
+  border: 0;
 
   background: transparent;
-  color: var(--text);
+
+  color: var(--nav-text);
 
   font-family: inherit;
   font-size: 12px;
@@ -149,7 +166,7 @@
   cursor: pointer;
 
   transition:
-    background 120ms ease,
+    background-color 120ms ease,
     color 120ms ease;
 }
 
@@ -164,22 +181,30 @@
 }
 
 /* =========================================================
-   NAV ICON
+   ICON
 ========================================================= */
 
 .iconContainer {
   width: 20px;
   min-width: 20px;
+  height: 20px;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  color: #c7d3df;
+  flex-shrink: 0;
+
+  color: var(--nav-icon);
 
   font-size: 15px;
 
   transition: color 120ms ease;
+}
+
+.iconContainer svg {
+  width: 15px;
+  height: 15px;
 }
 
 /* =========================================================
@@ -187,15 +212,16 @@
 ========================================================= */
 
 .navLabel {
+  min-width: 0;
+
   overflow: hidden;
 
   text-overflow: ellipsis;
-
   white-space: nowrap;
 }
 
 /* =========================================================
-   ACTIVE NAV ITEM
+   ACTIVE NAVIGATION ITEM
 ========================================================= */
 
 .active {
@@ -243,10 +269,12 @@
 
 /* =========================================================
    SECTION HEADING
-   Live Servers / Record Number
+   Live Servers
+   Record Number
 ========================================================= */
 
 .sectionHeading {
+  width: 100%;
   min-height: 40px;
 
   display: flex;
@@ -270,6 +298,7 @@
 
 /* =========================================================
    MNEMONIC CARD
+   ADMIN ONLY
 ========================================================= */
 
 .mnemonicCard {
@@ -277,15 +306,17 @@
 
   padding: 9px;
 
+  flex-shrink: 0;
+
+  background: rgba(255, 255, 255, 0.045);
+
   border: 1px solid rgba(255, 255, 255, 0.09);
 
   border-radius: 6px;
-
-  background: rgba(255, 255, 255, 0.045);
 }
 
 /* =========================================================
-   CARD LABEL
+   MNEMONIC LABEL
 ========================================================= */
 
 .cardLabel {
@@ -304,6 +335,8 @@
 ========================================================= */
 
 .inputRow {
+  width: 100%;
+
   display: flex;
   align-items: center;
 
@@ -318,10 +351,10 @@
   padding: 0 7px;
 
   border: 1px solid #ccd5df;
-
   border-radius: 4px;
 
   background: #ffffff;
+
   color: #26384a;
 
   font-family: inherit;
@@ -345,7 +378,7 @@
 }
 
 /* =========================================================
-   ADD BUTTON
+   ADD MNEMONIC BUTTON
 ========================================================= */
 
 .addButton {
@@ -355,11 +388,11 @@
 
   flex-shrink: 0;
 
-  border: none;
-
+  border: 0;
   border-radius: 4px;
 
   background: var(--primary);
+
   color: #ffffff;
 
   font-family: inherit;
@@ -368,7 +401,7 @@
 
   cursor: pointer;
 
-  transition: background 120ms ease;
+  transition: background-color 120ms ease;
 }
 
 .addButton:hover {
@@ -376,10 +409,12 @@
 }
 
 /* =========================================================
-   MNEMONIC TAGS
+   MNEMONIC TAG LIST
 ========================================================= */
 
 .mnemonicTags {
+  width: 100%;
+
   display: flex;
   flex-wrap: wrap;
 
@@ -393,7 +428,7 @@
 ========================================================= */
 
 .mnemonicTag {
-  height: 23px;
+  min-height: 23px;
 
   display: inline-flex;
   align-items: center;
@@ -402,18 +437,18 @@
 
   padding: 0 5px 0 7px;
 
-  border-radius: 4px;
-
   background: var(--primary);
 
   color: #ffffff;
+
+  border-radius: 4px;
 
   font-size: 9px;
   font-weight: 700;
 }
 
 /* =========================================================
-   MNEMONIC REMOVE BUTTON
+   REMOVE MNEMONIC
 ========================================================= */
 
 .mnemonicTag button {
@@ -425,8 +460,7 @@
 
   padding: 0;
 
-  border: none;
-
+  border: 0;
   border-radius: 3px;
 
   background: transparent;
@@ -445,7 +479,7 @@
 }
 
 /* =========================================================
-   ADMIN
+   ADMIN ITEM
 ========================================================= */
 
 .orangeItem {
@@ -461,15 +495,17 @@
 }
 
 /* =========================================================
-   RECORD SECTION
+   RECORD NUMBER SECTION
 ========================================================= */
 
 .recordSection {
   width: 100%;
+
+  flex-shrink: 0;
 }
 
 /* =========================================================
-   RECORD NUMBER WHITE BOX
+   RECORD NUMBER WHITE CARD
 ========================================================= */
 
 .recordCard {
@@ -480,7 +516,6 @@
   background: #ffffff;
 
   border: 1px solid #e0e5eb;
-
   border-radius: 6px;
 
   box-shadow:
@@ -489,10 +524,12 @@
 }
 
 /* =========================================================
-   RECORD SEARCH
+   RECORD SEARCH ROW
 ========================================================= */
 
 .recordSearch {
+  width: 100%;
+
   display: flex;
   align-items: center;
 
@@ -500,7 +537,7 @@
 }
 
 /* =========================================================
-   RECORD INPUT
+   RECORD NUMBER INPUT
 ========================================================= */
 
 .recordSearch input {
@@ -511,7 +548,6 @@
   padding: 0 7px;
 
   border: 1px solid #ccd5df;
-
   border-radius: 4px;
 
   background: #f8fafc;
@@ -524,9 +560,9 @@
   outline: none;
 
   transition:
+    background-color 120ms ease,
     border-color 120ms ease,
-    box-shadow 120ms ease,
-    background 120ms ease;
+    box-shadow 120ms ease;
 }
 
 .recordSearch input::placeholder {
@@ -550,13 +586,14 @@
   min-width: 35px;
   height: 30px;
 
-  padding: 0;
-
   display: grid;
   place-items: center;
 
-  border: none;
+  flex-shrink: 0;
 
+  padding: 0;
+
+  border: 0;
   border-radius: 4px;
 
   background: var(--primary);
@@ -569,7 +606,7 @@
 
   cursor: pointer;
 
-  transition: background 120ms ease;
+  transition: background-color 120ms ease;
 }
 
 .goButton:hover {
@@ -577,7 +614,7 @@
 }
 
 /* =========================================================
-   CHG/INC ASSISTANCE
+   CHG / INC ASSISTANCE
 ========================================================= */
 
 .assistanceText {
@@ -594,20 +631,24 @@
 }
 
 /* =========================================================
-   SPACER
-   Pushes logout/collapse to bottom
+   FLEX SPACER
+
+   Keeps Logout and Collapse at bottom.
 ========================================================= */
 
 .spacer {
   flex: 1;
+
   min-height: 10px;
 }
 
 /* =========================================================
-   BOTTOM SECTION
+   BOTTOM NAVIGATION
 ========================================================= */
 
 .bottom {
+  width: 100%;
+
   flex-shrink: 0;
 
   border-top: 1px solid rgba(255, 255, 255, 0.08);
@@ -628,11 +669,11 @@
 
   padding: 0 14px;
 
-  border: none;
+  border: 0;
 
   background: transparent;
 
-  color: var(--text-muted);
+  color: var(--nav-text-muted);
 
   font-family: inherit;
   font-size: 11px;
@@ -645,12 +686,12 @@
   cursor: pointer;
 
   transition:
-    background 120ms ease,
+    background-color 120ms ease,
     color 120ms ease;
 }
 
 .collapseButton .iconContainer {
-  color: #c7d3df;
+  color: var(--nav-icon);
 }
 
 .collapseButton:hover {
@@ -664,16 +705,18 @@
 }
 
 /* =========================================================
-   COLLAPSED SIDEBAR
-   Exactly 48px
+   COLLAPSED MODE
+   EXACTLY 48PX
 ========================================================= */
 
 .sidebar:not(.expanded) {
-  width: 48px;
-  min-width: 48px;
+  width: var(--sidebar-collapsed);
+  min-width: var(--sidebar-collapsed);
 }
 
-/* Center logo */
+/* =========================================================
+   COLLAPSED LOGO
+========================================================= */
 
 .sidebar:not(.expanded) .logo {
   justify-content: center;
@@ -682,18 +725,22 @@
   padding-right: 0;
 }
 
-/* Smaller logo to fit 48px comfortably */
-
 .sidebar:not(.expanded) .logoMark {
   width: 30px;
   min-width: 30px;
   height: 30px;
+
+  font-size: 14px;
 }
 
-/* Center regular nav icons */
+/* =========================================================
+   COLLAPSED NAV ITEMS
+========================================================= */
 
 .sidebar:not(.expanded) .navItem {
   justify-content: center;
+
+  gap: 0;
 
   padding-left: 0;
   padding-right: 0;
@@ -704,10 +751,14 @@
   min-width: 48px;
 }
 
-/* Center section icons */
+/* =========================================================
+   COLLAPSED SECTION HEADINGS
+========================================================= */
 
 .sidebar:not(.expanded) .sectionHeading {
   justify-content: center;
+
+  gap: 0;
 
   padding-left: 0;
   padding-right: 0;
@@ -718,10 +769,23 @@
   min-width: 48px;
 }
 
-/* Center collapse icon */
+/* =========================================================
+   COLLAPSED DIVIDER
+========================================================= */
+
+.sidebar:not(.expanded) .divider {
+  margin-left: 8px;
+  margin-right: 8px;
+}
+
+/* =========================================================
+   COLLAPSED BOTTOM BUTTON
+========================================================= */
 
 .sidebar:not(.expanded) .collapseButton {
   justify-content: center;
+
+  gap: 0;
 
   padding-left: 0;
   padding-right: 0;
@@ -732,39 +796,15 @@
   min-width: 48px;
 }
 
-/* Smaller divider */
-
-.sidebar:not(.expanded) .divider {
-  margin-left: 8px;
-  margin-right: 8px;
-}
-
 /* =========================================================
-   SCROLLBAR
+   HOVER TOOLTIP SUPPORT
+
+   The TSX already uses title="" when collapsed,
+   so the browser will show the item name.
 ========================================================= */
 
-.sidebar {
-  scrollbar-width: thin;
-
-  scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
-}
-
-.sidebar::-webkit-scrollbar {
-  width: 4px;
-}
-
-.sidebar::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.sidebar::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.15);
-
-  border-radius: 10px;
-}
-
 /* =========================================================
-   FOCUS ACCESSIBILITY
+   KEYBOARD ACCESSIBILITY
 ========================================================= */
 
 .navItem:focus-visible,
@@ -778,7 +818,48 @@
 }
 
 /* =========================================================
-   SMALLER SCREENS
+   DISABLED BUTTONS
+========================================================= */
+
+.navItem:disabled,
+.addButton:disabled,
+.goButton:disabled,
+.collapseButton:disabled {
+  cursor: not-allowed;
+
+  opacity: 0.5;
+}
+
+/* =========================================================
+   SIDEBAR SCROLLBAR
+========================================================= */
+
+.sidebar {
+  scrollbar-width: thin;
+
+  scrollbar-color: rgba(255, 255, 255, 0.16) transparent;
+}
+
+.sidebar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.16);
+
+  border-radius: 10px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* =========================================================
+   SMALL SCREEN
 ========================================================= */
 
 @media (max-width: 700px) {
