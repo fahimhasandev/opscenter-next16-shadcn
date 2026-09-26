@@ -3,18 +3,22 @@ import styles from "./App.module.css";
 import Day2OpsSidebar from "./sidebar/Day2OpsSidebar";
 
 function App() {
-  const [sidebarExpanded, setSidebarExpanded] = useState(true);
+  const [expanded, setExpanded] = useState(true);
 
   return (
-    <div className={styles.appLayout}>
+    <div className={styles.shell}>
       <Day2OpsSidebar
         role="ADMIN"
-        expanded={sidebarExpanded}
-        onExpandedChange={setSidebarExpanded}
+        expanded={expanded}
+        onExpandedChange={setExpanded}
       />
 
-      {/* Blank main content */}
-      <main className={styles.mainContent} />
+      <main className={styles.main}>{children}</main>
+
+      {/*
+        Put your global modal/notification
+        provider/component here if needed.
+      */}
     </div>
   );
 }

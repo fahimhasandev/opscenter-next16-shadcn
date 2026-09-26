@@ -1,68 +1,52 @@
 /* =========================================================
-   DAY2OPS SIDEBAR
-   ---------------------------------------------------------
-   Expanded width : 220px
-   Collapsed width: 48px
-   Primary color  : #d9732a
+   VARIABLES
 ========================================================= */
 
 .sidebar {
-  --sidebar-collapsed: 48px;
-  --sidebar-expanded: 220px;
+  --nav-expanded: 220px;
+  --nav-collapsed: 48px;
 
-  --primary: #d9732a;
-  --primary-hover: #c66320;
+  --orange: #d9732a;
+  --orange-hover: #c76522;
 
-  --nav-top: #193a57;
-  --nav-middle: #183650;
-  --nav-bottom: #142e47;
+  --nav-bg: #17334f;
+  --nav-bg-dark: #122a42;
 
-  --nav-text: #dce6ef;
-  --nav-text-muted: #9eb0c0;
-  --nav-icon: #c7d3df;
+  --nav-text: #d8e2ec;
+  --nav-muted: #91a4b6;
 
-  width: var(--sidebar-collapsed);
-  min-width: var(--sidebar-collapsed);
-  height: 100vh;
+  width: var(--nav-collapsed);
+  flex: 0 0 var(--nav-collapsed);
+
+  height: 100%;
 
   display: flex;
   flex-direction: column;
 
-  /*
-    IMPORTANT:
-    Prevent flex parent from shrinking sidebar.
-    Main content with flex: 1 will automatically
-    take the remaining space.
-  */
-  flex-shrink: 0;
-
   overflow: hidden;
-
-  background: linear-gradient(
-    180deg,
-    var(--nav-top) 0%,
-    var(--nav-middle) 45%,
-    var(--nav-bottom) 100%
-  );
 
   color: var(--nav-text);
 
-  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  background: linear-gradient(
+    180deg,
+    var(--nav-bg) 0%,
+    var(--nav-bg-dark) 100%
+  );
 
-  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.12);
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
 
   transition:
     width 180ms ease,
-    min-width 180ms ease;
+    flex-basis 180ms ease;
 }
 
 /* =========================================================
-   EXPANDED SIDEBAR
+   EXPANDED
 ========================================================= */
 
 .expanded {
-  width: var(--sidebar-expanded);
-  min-width: var(--sidebar-expanded);
+  width: var(--nav-expanded);
+  flex-basis: var(--nav-expanded);
 }
 
 /* =========================================================
@@ -70,9 +54,8 @@
 ========================================================= */
 
 .logo {
-  width: 100%;
-  height: 54px;
-  min-height: 54px;
+  height: 52px;
+  flex: 0 0 52px;
 
   display: flex;
   align-items: center;
@@ -88,48 +71,36 @@
 
 .logoMark {
   width: 32px;
-  min-width: 32px;
   height: 32px;
+  flex: 0 0 32px;
 
   display: grid;
   place-items: center;
 
-  flex-shrink: 0;
+  border-radius: 8px;
 
-  border-radius: 50%;
-
-  background: var(--primary);
-
-  color: #ffffff;
+  background: var(--orange);
+  color: #fff;
 
   font-size: 15px;
   font-weight: 800;
-
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
 }
 
 .logoText {
-  min-width: 0;
+  color: #fff;
 
-  overflow: hidden;
-
-  color: #ffffff;
-
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 700;
 
-  text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 /* =========================================================
-   MAIN NAVIGATION
+   NAVIGATION
 ========================================================= */
 
 .navigation {
-  width: 100%;
-
-  padding: 7px 0;
+  padding: 6px 0;
 }
 
 /* =========================================================
@@ -140,80 +111,41 @@
   position: relative;
 
   width: 100%;
-  height: 41px;
+  height: 40px;
 
   display: flex;
   align-items: center;
 
-  gap: 11px;
+  gap: 10px;
 
   padding: 0 14px;
 
   border: 0;
 
   background: transparent;
-
   color: var(--nav-text);
 
-  font-family: inherit;
   font-size: 12px;
   font-weight: 500;
 
   text-align: left;
 
-  white-space: nowrap;
-
   cursor: pointer;
 
+  white-space: nowrap;
+
   transition:
-    background-color 120ms ease,
+    background 120ms ease,
     color 120ms ease;
 }
 
 .navItem:hover {
-  background: rgba(255, 255, 255, 0.07);
+  background: rgba(255, 255, 255, 0.06);
 
-  color: #ffffff;
+  color: #fff;
 }
-
-.navItem:hover .iconContainer {
-  color: #ffffff;
-}
-
-/* =========================================================
-   ICON
-========================================================= */
-
-.iconContainer {
-  width: 20px;
-  min-width: 20px;
-  height: 20px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  flex-shrink: 0;
-
-  color: var(--nav-icon);
-
-  font-size: 15px;
-
-  transition: color 120ms ease;
-}
-
-.iconContainer svg {
-  width: 15px;
-  height: 15px;
-}
-
-/* =========================================================
-   NAV LABEL
-========================================================= */
 
 .navLabel {
-  min-width: 0;
-
   overflow: hidden;
 
   text-overflow: ellipsis;
@@ -221,19 +153,35 @@
 }
 
 /* =========================================================
-   ACTIVE NAVIGATION ITEM
+   ICONS
+========================================================= */
+
+.iconContainer {
+  width: 20px;
+  height: 20px;
+  flex: 0 0 20px;
+
+  display: grid;
+  place-items: center;
+
+  color: #b8c6d3;
+
+  font-size: 14px;
+}
+
+.iconContainer svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* =========================================================
+   ACTIVE
 ========================================================= */
 
 .active {
   background: rgba(255, 255, 255, 0.07);
 
-  color: #ffffff;
-
-  font-weight: 600;
-}
-
-.active .iconContainer {
-  color: var(--primary);
+  color: #fff;
 }
 
 .active::before {
@@ -241,15 +189,19 @@
 
   position: absolute;
 
-  top: 6px;
-  bottom: 6px;
   left: 0;
+  top: 7px;
+  bottom: 7px;
 
   width: 3px;
 
-  background: var(--primary);
+  border-radius: 0 3px 3px 0;
 
-  border-radius: 0 4px 4px 0;
+  background: var(--orange);
+}
+
+.active .iconContainer {
+  color: var(--orange);
 }
 
 /* =========================================================
@@ -257,203 +209,153 @@
 ========================================================= */
 
 .divider {
-  width: auto;
   height: 1px;
 
-  margin: 6px 8px;
+  margin: 5px 8px;
 
-  flex-shrink: 0;
-
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.07);
 }
 
 /* =========================================================
-   SECTION HEADING
-   Live Servers
-   Record Number
+   SECTION HEADINGS
 ========================================================= */
 
 .sectionHeading {
-  width: 100%;
-  min-height: 40px;
+  height: 38px;
 
   display: flex;
   align-items: center;
 
-  gap: 11px;
+  gap: 10px;
 
   padding: 0 14px;
 
-  color: #e3ebf2;
+  color: #e0e8ef;
 
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 600;
 
   white-space: nowrap;
 }
 
 .sectionHeading .iconContainer {
-  color: var(--primary);
+  color: var(--orange);
 }
 
 /* =========================================================
-   MNEMONIC CARD
-   ADMIN ONLY
+   MNEMONIC
 ========================================================= */
 
 .mnemonicCard {
-  margin: 0 8px 8px;
+  margin: 0 8px 7px;
 
-  padding: 9px;
+  padding: 8px;
 
-  flex-shrink: 0;
-
-  background: rgba(255, 255, 255, 0.045);
-
-  border: 1px solid rgba(255, 255, 255, 0.09);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 
   border-radius: 6px;
-}
 
-/* =========================================================
-   MNEMONIC LABEL
-========================================================= */
+  background: rgba(255, 255, 255, 0.04);
+}
 
 .cardLabel {
   display: block;
 
-  margin-bottom: 5px;
+  margin: 0 0 5px;
 
-  color: #d9e4ed;
+  color: #c9d4df;
 
   font-size: 10px;
   font-weight: 600;
 }
 
-/* =========================================================
-   MNEMONIC INPUT ROW
-========================================================= */
-
 .inputRow {
-  width: 100%;
-
   display: flex;
-  align-items: center;
 
   gap: 5px;
 }
 
 .inputRow input {
-  width: 100%;
+  flex: 1;
   min-width: 0;
-  height: 30px;
+
+  height: 29px;
 
   padding: 0 7px;
 
-  border: 1px solid #ccd5df;
+  border: 1px solid #d0d7df;
   border-radius: 4px;
 
-  background: #ffffff;
+  outline: 0;
 
+  background: #fff;
   color: #26384a;
 
-  font-family: inherit;
-  font-size: 11px;
-
-  outline: none;
-
-  transition:
-    border-color 120ms ease,
-    box-shadow 120ms ease;
-}
-
-.inputRow input::placeholder {
-  color: #9aa7b5;
+  font-size: 10px;
 }
 
 .inputRow input:focus {
-  border-color: var(--primary);
+  border-color: var(--orange);
 
-  box-shadow: 0 0 0 2px rgba(217, 115, 42, 0.12);
+  box-shadow: 0 0 0 2px rgba(217, 115, 42, 0.15);
 }
 
-/* =========================================================
-   ADD MNEMONIC BUTTON
-========================================================= */
-
 .addButton {
-  height: 30px;
+  height: 29px;
 
   padding: 0 9px;
-
-  flex-shrink: 0;
 
   border: 0;
   border-radius: 4px;
 
-  background: var(--primary);
+  background: var(--orange);
+  color: #fff;
 
-  color: #ffffff;
-
-  font-family: inherit;
   font-size: 10px;
   font-weight: 700;
 
   cursor: pointer;
-
-  transition: background-color 120ms ease;
 }
 
 .addButton:hover {
-  background: var(--primary-hover);
+  background: var(--orange-hover);
 }
 
 /* =========================================================
-   MNEMONIC TAG LIST
+   MNEMONIC TAGS
 ========================================================= */
 
 .mnemonicTags {
-  width: 100%;
-
   display: flex;
   flex-wrap: wrap;
 
   gap: 4px;
 
-  margin-top: 7px;
+  margin-top: 6px;
 }
 
-/* =========================================================
-   MNEMONIC TAG
-========================================================= */
-
 .mnemonicTag {
-  min-height: 23px;
+  height: 21px;
 
-  display: inline-flex;
+  display: flex;
   align-items: center;
 
-  gap: 4px;
+  gap: 3px;
 
   padding: 0 5px 0 7px;
 
-  background: var(--primary);
-
-  color: #ffffff;
-
   border-radius: 4px;
+
+  background: var(--orange);
+  color: #fff;
 
   font-size: 9px;
   font-weight: 700;
 }
 
-/* =========================================================
-   REMOVE MNEMONIC
-========================================================= */
-
 .mnemonicTag button {
-  width: 16px;
-  height: 16px;
+  width: 14px;
+  height: 14px;
 
   display: grid;
   place-items: center;
@@ -461,264 +363,174 @@
   padding: 0;
 
   border: 0;
-  border-radius: 3px;
 
   background: transparent;
-
-  color: rgba(255, 255, 255, 0.85);
-
-  font-size: 9px;
+  color: #fff;
 
   cursor: pointer;
+
+  opacity: 0.8;
 }
 
 .mnemonicTag button:hover {
-  background: rgba(0, 0, 0, 0.15);
-
-  color: #ffffff;
+  opacity: 1;
 }
 
 /* =========================================================
-   ADMIN ITEM
+   ADMIN
 ========================================================= */
 
-.orangeItem {
-  color: #ffffff;
-}
-
-.orangeItem .iconContainer {
-  color: var(--primary);
-}
-
+.orangeItem .iconContainer,
 .orangeIcon {
-  color: var(--primary);
+  color: var(--orange);
 }
 
 /* =========================================================
-   RECORD NUMBER SECTION
+   RECORD NUMBER
 ========================================================= */
 
 .recordSection {
   width: 100%;
-
-  flex-shrink: 0;
 }
 
-/* =========================================================
-   RECORD NUMBER WHITE CARD
-========================================================= */
+/*
+   Only this card is white.
+   The sidebar stays dark blue.
+*/
 
 .recordCard {
   margin: 0 8px 8px;
 
   padding: 8px;
 
-  background: #ffffff;
-
-  border: 1px solid #e0e5eb;
   border-radius: 6px;
 
-  box-shadow:
-    0 2px 5px rgba(0, 0, 0, 0.12),
-    0 1px 2px rgba(0, 0, 0, 0.05);
+  background: #fff;
+
+  box-shadow: 0 2px 7px rgba(0, 0, 0, 0.15);
 }
 
-/* =========================================================
-   RECORD SEARCH ROW
-========================================================= */
-
 .recordSearch {
-  width: 100%;
-
   display: flex;
-  align-items: center;
 
   gap: 5px;
 }
 
-/* =========================================================
-   RECORD NUMBER INPUT
-========================================================= */
-
 .recordSearch input {
-  width: 100%;
+  flex: 1;
   min-width: 0;
-  height: 30px;
+
+  height: 29px;
 
   padding: 0 7px;
 
-  border: 1px solid #ccd5df;
+  border: 1px solid #d1d8e0;
   border-radius: 4px;
 
-  background: #f8fafc;
+  outline: 0;
 
+  background: #f8fafc;
   color: #26384a;
 
-  font-family: inherit;
-  font-size: 11px;
-
-  outline: none;
-
-  transition:
-    background-color 120ms ease,
-    border-color 120ms ease,
-    box-shadow 120ms ease;
-}
-
-.recordSearch input::placeholder {
-  color: #9aa7b5;
+  font-size: 10px;
 }
 
 .recordSearch input:focus {
-  background: #ffffff;
+  background: #fff;
 
-  border-color: var(--primary);
+  border-color: var(--orange);
 
-  box-shadow: 0 0 0 2px rgba(217, 115, 42, 0.12);
+  box-shadow: 0 0 0 2px rgba(217, 115, 42, 0.13);
 }
 
-/* =========================================================
-   GO BUTTON
-========================================================= */
-
 .goButton {
-  width: 35px;
-  min-width: 35px;
-  height: 30px;
+  width: 34px;
+  flex: 0 0 34px;
 
-  display: grid;
-  place-items: center;
-
-  flex-shrink: 0;
-
-  padding: 0;
+  height: 29px;
 
   border: 0;
   border-radius: 4px;
 
-  background: var(--primary);
+  background: var(--orange);
+  color: #fff;
 
-  color: #ffffff;
-
-  font-family: inherit;
   font-size: 10px;
   font-weight: 700;
 
   cursor: pointer;
-
-  transition: background-color 120ms ease;
 }
 
 .goButton:hover {
-  background: var(--primary-hover);
+  background: var(--orange-hover);
 }
 
-/* =========================================================
-   CHG / INC ASSISTANCE
-========================================================= */
-
 .assistanceText {
-  margin-top: 6px;
+  margin-top: 5px;
 
-  color: var(--primary);
+  color: var(--orange);
 
   font-size: 9px;
   font-weight: 700;
 
   text-align: center;
-
-  white-space: nowrap;
 }
 
 /* =========================================================
-   FLEX SPACER
-
-   Keeps Logout and Collapse at bottom.
+   BOTTOM
 ========================================================= */
 
 .spacer {
   flex: 1;
-
-  min-height: 10px;
 }
-
-/* =========================================================
-   BOTTOM NAVIGATION
-========================================================= */
 
 .bottom {
-  width: 100%;
-
   flex-shrink: 0;
 
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
 }
 
 /* =========================================================
-   COLLAPSE BUTTON
+   COLLAPSE
 ========================================================= */
 
 .collapseButton {
   width: 100%;
-  height: 39px;
+  height: 38px;
 
   display: flex;
   align-items: center;
 
-  gap: 11px;
+  gap: 10px;
 
   padding: 0 14px;
 
   border: 0;
 
   background: transparent;
+  color: var(--nav-muted);
 
-  color: var(--nav-text-muted);
-
-  font-family: inherit;
-  font-size: 11px;
-  font-weight: 500;
-
-  text-align: left;
-
-  white-space: nowrap;
+  font-size: 10px;
 
   cursor: pointer;
 
-  transition:
-    background-color 120ms ease,
-    color 120ms ease;
-}
-
-.collapseButton .iconContainer {
-  color: var(--nav-icon);
+  white-space: nowrap;
 }
 
 .collapseButton:hover {
   background: rgba(255, 255, 255, 0.06);
 
-  color: #ffffff;
-}
-
-.collapseButton:hover .iconContainer {
-  color: var(--primary);
+  color: #fff;
 }
 
 /* =========================================================
-   COLLAPSED MODE
-   EXACTLY 48PX
+   COLLAPSED 48PX MODE
 ========================================================= */
 
-.sidebar:not(.expanded) {
-  width: var(--sidebar-collapsed);
-  min-width: var(--sidebar-collapsed);
-}
-
-/* =========================================================
-   COLLAPSED LOGO
-========================================================= */
-
-.sidebar:not(.expanded) .logo {
+.sidebar:not(.expanded) .logo,
+.sidebar:not(.expanded) .navItem,
+.sidebar:not(.expanded) .sectionHeading,
+.sidebar:not(.expanded) .collapseButton {
   justify-content: center;
 
   padding-left: 0;
@@ -727,150 +539,30 @@
 
 .sidebar:not(.expanded) .logoMark {
   width: 30px;
-  min-width: 30px;
   height: 30px;
-
-  font-size: 14px;
+  flex-basis: 30px;
 }
 
-/* =========================================================
-   COLLAPSED NAV ITEMS
-========================================================= */
-
-.sidebar:not(.expanded) .navItem {
-  justify-content: center;
-
-  gap: 0;
-
-  padding-left: 0;
-  padding-right: 0;
-}
-
-.sidebar:not(.expanded) .navItem .iconContainer {
-  width: 48px;
-  min-width: 48px;
-}
-
-/* =========================================================
-   COLLAPSED SECTION HEADINGS
-========================================================= */
-
-.sidebar:not(.expanded) .sectionHeading {
-  justify-content: center;
-
-  gap: 0;
-
-  padding-left: 0;
-  padding-right: 0;
-}
-
-.sidebar:not(.expanded) .sectionHeading .iconContainer {
-  width: 48px;
-  min-width: 48px;
-}
-
-/* =========================================================
-   COLLAPSED DIVIDER
-========================================================= */
-
-.sidebar:not(.expanded) .divider {
-  margin-left: 8px;
-  margin-right: 8px;
-}
-
-/* =========================================================
-   COLLAPSED BOTTOM BUTTON
-========================================================= */
-
+.sidebar:not(.expanded) .navItem,
+.sidebar:not(.expanded) .sectionHeading,
 .sidebar:not(.expanded) .collapseButton {
-  justify-content: center;
-
   gap: 0;
-
-  padding-left: 0;
-  padding-right: 0;
 }
 
-.sidebar:not(.expanded) .collapseButton .iconContainer {
+.sidebar:not(.expanded) .iconContainer {
   width: 48px;
-  min-width: 48px;
+  flex-basis: 48px;
 }
 
 /* =========================================================
-   HOVER TOOLTIP SUPPORT
-
-   The TSX already uses title="" when collapsed,
-   so the browser will show the item name.
-========================================================= */
-
-/* =========================================================
-   KEYBOARD ACCESSIBILITY
+   ACCESSIBILITY
 ========================================================= */
 
 .navItem:focus-visible,
 .collapseButton:focus-visible,
 .addButton:focus-visible,
-.goButton:focus-visible,
-.mnemonicTag button:focus-visible {
-  outline: 2px solid var(--primary);
+.goButton:focus-visible {
+  outline: 2px solid var(--orange);
 
   outline-offset: -2px;
-}
-
-/* =========================================================
-   DISABLED BUTTONS
-========================================================= */
-
-.navItem:disabled,
-.addButton:disabled,
-.goButton:disabled,
-.collapseButton:disabled {
-  cursor: not-allowed;
-
-  opacity: 0.5;
-}
-
-/* =========================================================
-   SIDEBAR SCROLLBAR
-========================================================= */
-
-.sidebar {
-  scrollbar-width: thin;
-
-  scrollbar-color: rgba(255, 255, 255, 0.16) transparent;
-}
-
-.sidebar::-webkit-scrollbar {
-  width: 4px;
-}
-
-.sidebar::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.sidebar::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.16);
-
-  border-radius: 10px;
-}
-
-.sidebar::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.25);
-}
-
-/* =========================================================
-   SMALL SCREEN
-========================================================= */
-
-@media (max-width: 700px) {
-  .expanded {
-    width: 190px;
-    min-width: 190px;
-  }
-
-  .mnemonicCard,
-  .recordCard {
-    margin-left: 6px;
-    margin-right: 6px;
-  }
 }
