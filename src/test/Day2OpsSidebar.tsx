@@ -213,7 +213,6 @@ export default function Day2OpsSidebar({ role }: Day2OpsSidebarProps) {
                 type="button"
                 className={styles.goButton}
                 onClick={handleRecordSearch}
-                aria-label="Search CHG or INC"
               >
                 Go
               </button>
