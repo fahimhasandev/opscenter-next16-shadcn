@@ -61,137 +61,128 @@ export default function MnemonicList({
 ## MnemonicList.module.css
 
 ```cs
-.mnemonicBox {
+.container {
   width: 100%;
-  max-width: 280px;
+  max-width: 250px;
 
-  margin: 0;
-  padding: 14px;
+  padding: 10px !important;
+  margin: 0 !important;
 
-  background: #0b2940;
+  background: #0b2940 !important;
   border: 1px solid #29465c;
-  border-radius: 8px;
+  border-radius: 6px;
 
-  box-shadow: none;
+  box-shadow: none !important;
 }
 
-/* --------------------
-   Header
--------------------- */
+/* Header */
 
 .header {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 7px;
 
-  padding-bottom: 12px;
-  margin-bottom: 10px;
-
-  color: #ffffff;
-  font-size: 16px;
-  font-weight: 700;
+  padding: 2px 2px 9px;
+  margin-bottom: 8px;
 
   border-bottom: 1px solid #365066;
+
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
 }
 
 .headerIcon {
-  width: 18px;
-  height: 18px;
+  width: 14px;
+  height: 14px;
 
   color: #d9732a;
 }
 
-/* --------------------
-   Mnemonic List
--------------------- */
+/* List */
 
 .list {
   display: flex;
   flex-direction: column;
-  gap: 7px;
+  gap: 5px;
 }
 
 /*
-  4 rows:
-  44px * 4 = 176
-  7px * 3 gaps = 21
+  Each mnemonic = 32px
+  4 rows = 128px
+  3 gaps = 15px
 
-  Total = 197px
+  Total = 143px
 */
 
 .scrollable {
-  max-height: 197px;
+  max-height: 143px;
   overflow-y: auto;
 
-  padding-right: 5px;
+  padding-right: 4px;
 }
 
-/* --------------------
-   Mnemonic
--------------------- */
+/* Mnemonic */
 
 .mnemonic {
-  flex: 0 0 44px;
+  flex: 0 0 32px;
 
   width: 100%;
-  height: 44px;
+  height: 32px;
 
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 7px;
 
-  padding: 0 16px;
+  padding: 0 10px;
 
   border: 0;
-  border-radius: 7px;
+  border-radius: 5px;
 
   background: #d9732a;
 
-  color: #ffffff;
-  font-family: inherit;
-  font-size: 15px;
-  font-weight: 600;
+  color: #fff;
 
-  text-align: left;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
 
   cursor: pointer;
 
   transition:
-    background-color 150ms ease,
-    transform 150ms ease;
+    background-color 0.15s ease,
+    transform 0.1s ease;
 }
 
 .mnemonic:hover {
-  background: #c76624;
+  background: #c86625;
 }
 
 .mnemonic:active {
   transform: scale(0.98);
 }
 
-.mnemonic:focus-visible {
-  outline: 2px solid #ffffff;
-  outline-offset: 2px;
-}
+/* SMALL Font Awesome tag */
 
 .tagIcon {
-  width: 16px;
-  min-width: 16px;
+  width: 10px;
+  height: 10px;
+  font-size: 10px;
 
-  color: #ffffff;
+  flex-shrink: 0;
+
+  color: #fff;
 }
 
-/* --------------------
-   Scrollbar
--------------------- */
+/* Scrollbar */
 
 .scrollable {
   scrollbar-width: thin;
-  scrollbar-color: #7690a3 transparent;
+  scrollbar-color: #71889a transparent;
 }
 
 .scrollable::-webkit-scrollbar {
-  width: 5px;
+  width: 4px;
 }
 
 .scrollable::-webkit-scrollbar-track {
@@ -199,38 +190,36 @@ export default function MnemonicList({
 }
 
 .scrollable::-webkit-scrollbar-thumb {
-  background: #7690a3;
+  background: #71889a;
   border-radius: 10px;
 }
 
-/* --------------------
-   Empty state
--------------------- */
+/* Empty state */
 
 .empty {
-  min-height: 145px;
+  height: 90px;
 
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  gap: 12px;
+  justify-content: center;
 
-  border: 1px dashed #587287;
-  border-radius: 7px;
+  gap: 7px;
 
-  color: #9eb0bf;
+  border: 1px dashed #506b80;
+  border-radius: 5px;
 
-  font-size: 14px;
+  color: #91a6b6;
+
+  font-size: 12px;
 }
 
 .emptyIcon {
-  width: 30px;
-  height: 30px;
+  width: 18px;
+  height: 18px;
 
-  color: #7890a2;
+  color: #71899b;
 }
-
 ```
 
 ## Use it
