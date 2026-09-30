@@ -60,36 +60,40 @@ export default function MnemonicList({
 
 ## MnemonicList.module.css
 
-```cs
-.container {
+```css
+.mnemonicBox {
   width: 100%;
-  max-width: 250px;
+  max-width: 280px;
 
-  padding: 10px !important;
-  margin: 0 !important;
+  margin: 0;
+  padding: 10px 0;
 
-  background: #0b2940 !important;
-  border: 1px solid #29465c;
-  border-radius: 6px;
+  /* Let sidebar background show */
+  background: transparent !important;
 
+  /* Remove Box/card appearance */
+  border: none;
+  border-radius: 0;
   box-shadow: none !important;
 }
 
-/* Header */
+/* --------------------
+   Header
+-------------------- */
 
 .header {
   display: flex;
   align-items: center;
-  gap: 7px;
+  gap: 8px;
 
-  padding: 2px 2px 9px;
+  padding: 0 4px 8px;
   margin-bottom: 8px;
 
-  border-bottom: 1px solid #365066;
-
-  color: #fff;
+  color: #ffffff;
   font-size: 14px;
   font-weight: 600;
+
+  border-bottom: 1px solid #365066;
 }
 
 .headerIcon {
@@ -99,18 +103,22 @@ export default function MnemonicList({
   color: #d9732a;
 }
 
-/* List */
+/* --------------------
+   Mnemonic List
+-------------------- */
 
 .list {
   display: flex;
   flex-direction: column;
+
   gap: 5px;
 }
 
 /*
-  Each mnemonic = 32px
-  4 rows = 128px
-  3 gaps = 15px
+  4 visible rows
+
+  32px × 4 = 128px
+  5px × 3 = 15px
 
   Total = 143px
 */
@@ -122,7 +130,9 @@ export default function MnemonicList({
   padding-right: 4px;
 }
 
-/* Mnemonic */
+/* --------------------
+   Mnemonic Item
+-------------------- */
 
 .mnemonic {
   flex: 0 0 32px;
@@ -132,53 +142,67 @@ export default function MnemonicList({
 
   display: flex;
   align-items: center;
+
   gap: 7px;
 
   padding: 0 10px;
 
-  border: 0;
+  border: none;
   border-radius: 5px;
 
   background: #d9732a;
 
-  color: #fff;
+  color: #ffffff;
 
   font-family: inherit;
   font-size: 12px;
   font-weight: 600;
 
+  text-align: left;
+
   cursor: pointer;
 
   transition:
-    background-color 0.15s ease,
-    transform 0.1s ease;
+    background-color 150ms ease,
+    transform 100ms ease;
 }
 
 .mnemonic:hover {
-  background: #c86625;
+  background: #c76624;
 }
 
 .mnemonic:active {
   transform: scale(0.98);
 }
 
-/* SMALL Font Awesome tag */
+.mnemonic:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 2px;
+}
+
+/* --------------------
+   Small Font Awesome Tag
+-------------------- */
 
 .tagIcon {
   width: 10px;
+  min-width: 10px;
   height: 10px;
+
   font-size: 10px;
 
-  flex-shrink: 0;
+  color: #ffffff;
 
-  color: #fff;
+  flex-shrink: 0;
 }
 
-/* Scrollbar */
+/* --------------------
+   Scrollbar
+-------------------- */
 
 .scrollable {
   scrollbar-width: thin;
-  scrollbar-color: #71889a transparent;
+  scrollbar-color: #7690a3 transparent;
 }
 
 .scrollable::-webkit-scrollbar {
@@ -190,26 +214,33 @@ export default function MnemonicList({
 }
 
 .scrollable::-webkit-scrollbar-thumb {
-  background: #71889a;
+  background: #7690a3;
   border-radius: 10px;
 }
 
-/* Empty state */
+.scrollable::-webkit-scrollbar-thumb:hover {
+  background: #91a5b4;
+}
+
+/* --------------------
+   Empty State
+-------------------- */
 
 .empty {
-  height: 90px;
+  min-height: 90px;
 
   display: flex;
   flex-direction: column;
-  align-items: center;
+
   justify-content: center;
+  align-items: center;
 
   gap: 7px;
 
-  border: 1px dashed #506b80;
+  border: 1px dashed #587287;
   border-radius: 5px;
 
-  color: #91a6b6;
+  color: #9eb0bf;
 
   font-size: 12px;
 }
@@ -218,7 +249,7 @@ export default function MnemonicList({
   width: 18px;
   height: 18px;
 
-  color: #71899b;
+  color: #7890a2;
 }
 ```
 
