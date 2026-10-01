@@ -61,149 +61,205 @@ export default function MnemonicList({
 ## MnemonicList.module.css
 
 ```css
+/* =========================================================
+   MNEMONIC CONTAINER
+========================================================= */
+
 .mnemonicBox {
   width: 100%;
-  max-width: 280px;
-
   margin: 0;
-  padding: 10px 0;
 
-  /* Let sidebar background show */
+  /* Space around the whole MNE section */
+  padding: 10px 12px;
+
+  /* Use sidebar background */
   background: transparent !important;
 
-  /* Remove Box/card appearance */
-  border: none;
+  border: none !important;
   border-radius: 0;
+
   box-shadow: none !important;
+
+  box-sizing: border-box;
 }
 
-/* --------------------
-   Header
--------------------- */
+/* =========================================================
+   HEADER
+========================================================= */
 
 .header {
   display: flex;
   align-items: center;
+
   gap: 8px;
 
-  padding: 0 4px 8px;
+  width: 100%;
+
+  padding: 0 2px 8px;
+
+  /* Space between divider and first MNE */
   margin-bottom: 8px;
 
   color: #ffffff;
+
   font-size: 14px;
   font-weight: 600;
 
-  border-bottom: 1px solid #365066;
+  line-height: 1.2;
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+
+  box-sizing: border-box;
 }
+
+/* Font Awesome header icon */
 
 .headerIcon {
   width: 14px;
   height: 14px;
 
+  min-width: 14px;
+
   color: #d9732a;
+
+  flex-shrink: 0;
 }
 
-/* --------------------
-   Mnemonic List
--------------------- */
+/* =========================================================
+   MNEMONIC LIST
+========================================================= */
 
 .list {
   display: flex;
   flex-direction: column;
 
-  gap: 5px;
+  width: 100%;
+
+  /*
+    Enough separation without making
+    the sidebar unnecessarily tall.
+  */
+  gap: 6px;
+
+  margin: 0;
+  padding: 0;
+
+  box-sizing: border-box;
 }
 
+/* =========================================================
+   SCROLLABLE LIST
+========================================================= */
+
 /*
-  4 visible rows
+   4 visible MNEs:
 
-  32px × 4 = 128px
-  5px × 3 = 15px
+   30px × 4 = 120px
+   6px × 3 = 18px
 
-  Total = 143px
+   Total = 138px
 */
 
 .scrollable {
-  max-height: 143px;
-  overflow-y: auto;
+  max-height: 138px;
 
-  padding-right: 4px;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  /*
+    Prevent scrollbar from touching
+    the orange MNE buttons.
+  */
+  padding-right: 6px;
+
+  scrollbar-width: thin;
+  scrollbar-color: #71899b transparent;
 }
 
-/* --------------------
-   Mnemonic Item
--------------------- */
+/* =========================================================
+   MNEMONIC BUTTON
+========================================================= */
 
 .mnemonic {
-  flex: 0 0 32px;
+  /* Fixed compact height */
+  flex: 0 0 30px;
 
   width: 100%;
-  height: 32px;
+  height: 30px;
 
   display: flex;
   align-items: center;
 
   gap: 7px;
 
+  margin: 0;
+
   padding: 0 10px;
 
   border: none;
-  border-radius: 5px;
+  border-radius: 4px;
 
   background: #d9732a;
 
   color: #ffffff;
 
   font-family: inherit;
+
   font-size: 12px;
   font-weight: 600;
+
+  line-height: 1;
 
   text-align: left;
 
   cursor: pointer;
+
+  box-sizing: border-box;
 
   transition:
     background-color 150ms ease,
     transform 100ms ease;
 }
 
+/* Hover */
+
 .mnemonic:hover {
   background: #c76624;
 }
+
+/* Click */
 
 .mnemonic:active {
   transform: scale(0.98);
 }
 
+/* Keyboard focus */
+
 .mnemonic:focus-visible {
   outline: 2px solid #ffffff;
-  outline-offset: 2px;
+  outline-offset: -2px;
 }
 
-/* --------------------
-   Small Font Awesome Tag
--------------------- */
+/* =========================================================
+   FONT AWESOME TAG ICON
+========================================================= */
 
 .tagIcon {
-  width: 10px;
-  min-width: 10px;
-  height: 10px;
+  width: 9px;
+  height: 9px;
 
-  font-size: 10px;
+  min-width: 9px;
+
+  font-size: 9px;
 
   color: #ffffff;
 
   flex-shrink: 0;
 }
 
-/* --------------------
-   Scrollbar
--------------------- */
-
-.scrollable {
-  scrollbar-width: thin;
-  scrollbar-color: #7690a3 transparent;
-}
+/* =========================================================
+   SCROLLBAR - CHROME / EDGE / SAFARI
+========================================================= */
 
 .scrollable::-webkit-scrollbar {
   width: 4px;
@@ -214,7 +270,8 @@ export default function MnemonicList({
 }
 
 .scrollable::-webkit-scrollbar-thumb {
-  background: #7690a3;
+  background: #71899b;
+
   border-radius: 10px;
 }
 
@@ -222,32 +279,45 @@ export default function MnemonicList({
   background: #91a5b4;
 }
 
-/* --------------------
-   Empty State
--------------------- */
+/* =========================================================
+   EMPTY STATE
+========================================================= */
 
 .empty {
-  min-height: 90px;
+  width: 100%;
+  min-height: 75px;
 
   display: flex;
   flex-direction: column;
 
-  justify-content: center;
   align-items: center;
+  justify-content: center;
 
-  gap: 7px;
+  gap: 6px;
 
-  border: 1px dashed #587287;
-  border-radius: 5px;
+  padding: 10px;
 
   color: #9eb0bf;
 
-  font-size: 12px;
+  font-size: 11px;
+  font-weight: 500;
+
+  text-align: center;
+
+  background: transparent;
+
+  border: 1px dashed rgba(255, 255, 255, 0.2);
+
+  border-radius: 4px;
+
+  box-sizing: border-box;
 }
 
+/* Empty state Font Awesome icon */
+
 .emptyIcon {
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
 
   color: #7890a2;
 }
